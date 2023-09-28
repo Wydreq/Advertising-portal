@@ -7,10 +7,11 @@ import { AuthComponent } from './auth/auth.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ModalComponent } from './shared/modal/modal.component';
 import { RegisterModalComponent } from './auth/register-modal/register-modal.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { HomeComponent } from './home/home.component';
+import {AuthInterceptorService} from "./auth/auth-interceptor.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,13 @@ import { HomeComponent } from './home/home.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi   : true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
