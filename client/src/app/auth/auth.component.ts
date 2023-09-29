@@ -11,6 +11,7 @@ import {AuthService} from "./auth.service";
 })
 export class AuthComponent {
    isLogin: boolean = true;
+  isReset: boolean = false;
    isLoading: boolean = false;
   errorMessage: string = '';
 

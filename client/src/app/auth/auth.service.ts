@@ -58,6 +58,30 @@ export class AuthService {
     )
   }
 
+  forgotPassword(email: string) {
+    return this.http.post('http://localhost:5000/api/v1/auth/forgotpassword', {
+      email: email,
+    }).pipe(
+      catchError(this.handleError),
+      tap(resData => {
+
+      })
+    )
+  }
+
+  resetPassword(password: string, confirmPassword: string, token: string) {
+    return this.http.post(`http://localhost:5000/api/v1/auth/resetpassword/${token}`, {
+      password,
+      confirmPassword
+    }).pipe(
+      catchError(this.handleError),
+      tap(resData => {
+
+      })
+    )
+  }
+
+
   autoLogin() {
     // @ts-ignore
     const userData = JSON.parse(localStorage.getItem('userData'));

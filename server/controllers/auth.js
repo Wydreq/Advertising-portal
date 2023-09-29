@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
+const sendEmail = require('../utils/sendEmail');
+const crypto = require('crypto');
 
 // @desc    Register user
 // @route   POST /api/v1/auth/register
@@ -63,6 +65,75 @@ exports.getMe = asyncHandler(async (req, res, next) => {
     })
 })
 
+
+// @desc        Forgot password
+// @route       POST /api/v1/auth/forgotpassword
+// @access      Private
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+    const user = await User.findOne({email: req.body.email});
+
+    if(!user) {
+        return next(new ErrorResponse('There is no user with that email', 404));
+    }
+
+    const resetToken = user.getResetPasswordToken();
+
+    await user.save({validateBeforeSave: false})
+
+    //Create reset url
+    const resetUrl = `http://localhost:4200/auth/resetpassword/${resetToken}`;
+
+    const message = `Reset password link \n\n ${resetUrl}`;
+
+    try {
+        await sendEmail({
+            email: user.email,
+            subject: 'Password reset token',
+            message
+        });
+        res.status(200).json({success: true, data: 'Email send'});
+    } catch (err) {
+        console.log(err);
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpire = undefined;
+
+        await user.save({validateBeforeSave: false});
+        return next(new ErrorResponse('Email could not be send', 500));
+    }
+
+    res.status(200).json({
+        success: true,
+        data: user
+    })
+});
+
+
+// @desc        Reset password
+// @route       PUT /api/v1/auth/resetpassword/:resettoken
+// @access      Private
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+
+    if(req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorResponse('Passwords are not the same!', 400));
+    }
+
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.resettoken).digest('hex');
+
+    const user = await User.findOne({resetPasswordToken, resetPasswordExpire: {$gt: Date.now()}});
+
+    if(!user) {
+        return next(new ErrorResponse('Invalid token', 400));
+    }
+
+    //Set new passwprd
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    sendTokenResponse(user, 200, res);
+})
 
 const sendTokenResponse = (user, statusCode, res) => {
     const token = user.getSignedJwtToken();

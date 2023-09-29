@@ -1,4 +1,5 @@
 <app-register-modal (close)="isLogin = true" *ngIf="!isLogin"></app-register-modal>
+<app-forgot-password-modal (close)="isReset = false" *ngIf="isReset"></app-forgot-password-modal>
 <div class="row justify-content-center">
   <div class="col-7">
   <h1 style="margin-top: 5%; margin-bottom: 20px">Sign in!</h1>
@@ -32,6 +33,7 @@
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 15px">{{isLoading ? 'Loading...' : 'Sign in'}}</button>
           <p class="switch" (click)="isLogin = !isLogin">No account? Create a new account!</p>
+          <p class="switch" (click)="isReset = !isReset">Forgot password? Reset here!</p>
       </form>
     </div>
   </div>

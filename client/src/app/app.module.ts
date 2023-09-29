@@ -12,6 +12,10 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { AlertComponent } from './shared/alert/alert.component';
 import { HomeComponent } from './home/home.component';
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import { ForgotPasswordModalComponent } from './auth/forgot-password-modal/forgot-password-modal.component';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import {AuthInterceptorService} from "./auth/auth-interceptor.service";
     RegisterModalComponent,
     LoadingSpinnerComponent,
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    ForgotPasswordModalComponent,
+    ForgotPasswordComponent,
+    NotFoundComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
