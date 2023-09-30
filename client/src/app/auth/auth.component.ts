@@ -2,18 +2,21 @@ import {Component} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
+import {Message} from "primeng/api";
+import {MessageService} from "primeng/api";
 
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  providers: [MessageService]
 })
-export class AuthComponent {
+export class AuthComponent{
    isLogin: boolean = true;
   isReset: boolean = false;
    isLoading: boolean = false;
-  errorMessage: string = '';
+  messages: Message[] = [];
 
    constructor(private authService: AuthService) {}
 
@@ -26,13 +29,22 @@ export class AuthComponent {
     )
     authObs.subscribe(
       resData => {
+        console.log(resData);
         this.isLoading = false;
-        this.errorMessage = '';
+        this.messages = [];
       },
       error => {
         this.isLoading = false;
-        this.errorMessage = error;
+        this.messages = [
+          { severity: 'error', summary: 'Error', detail: error },
+        ]
       }
     )
+  }
+
+  registerSuccess() {
+    this.messages = [
+      { severity: 'success', summary: 'Success', detail: 'Account has been created! Log in   ' },
+    ]
   }
 }

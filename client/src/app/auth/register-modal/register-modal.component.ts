@@ -3,7 +3,13 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {AuthResponseData, AuthService} from "../auth.service";
 import {Observable} from "rxjs";
+import {Message} from "primeng/api";
 
+
+interface Gender {
+  name: string,
+  value: string
+}
 
 @Component({
   selector: 'app-register-modal',
@@ -12,13 +18,22 @@ import {Observable} from "rxjs";
 })
 export class RegisterModalComponent implements OnInit{
   @Output() close = new EventEmitter<void>();
+  @Output() registerSuccess = new EventEmitter<void>();
   signupForm: FormGroup | any;
   isLoading: boolean = false;
-  errorMessage: string = '';
+  genders: Gender[] | undefined;
+  messages: Message[] = [];
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+
+    this.genders = [
+      {name: 'Male', value: 'male'},
+      {name: 'Female', value: 'female'},
+      {name: 'Other', value: 'other'}
+    ]
+
     this.signupForm = new FormGroup({
       'fName': new FormControl(null, Validators.required),
       'lName': new FormControl(null,Validators.required),
@@ -74,12 +89,15 @@ export class RegisterModalComponent implements OnInit{
     authObs.subscribe(
       resData => {
         this.isLoading = false;
-        this.errorMessage = '';
+        this.messages = [];
         this.close.emit();
+        this.registerSuccess.emit();
       },
       error => {
+        this.messages = [
+          { severity: 'error', summary: 'Error', detail: error },
+        ];
         this.isLoading = false;
-        this.errorMessage = error;
       }
     )
   }

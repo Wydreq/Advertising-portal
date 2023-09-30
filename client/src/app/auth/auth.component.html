@@ -1,27 +1,28 @@
-<app-register-modal (close)="isLogin = true" *ngIf="!isLogin"></app-register-modal>
+<app-register-modal (close)="isLogin = true" (registerSuccess)="registerSuccess()" *ngIf="!isLogin"></app-register-modal>
 <app-forgot-password-modal (close)="isReset = false" *ngIf="isReset"></app-forgot-password-modal>
-<div class="row justify-content-center">
-  <div class="col-7">
+<div class="container">
   <h1 style="margin-top: 5%; margin-bottom: 20px">Sign in!</h1>
-    <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
-      {{errorMessage}}
-    </div>
+     <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
+      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
       <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
-        <div class="form-group">
-          <label for="email">E-Mail</label>
+        <div class="input-group">
+          <label htmlFor="email">Email</label>
           <input
+            pInputText
             type="email"
             id="email"
             class="form-control"
             ngModel
             name="email"
+            aria-describedby="username-help"
             required
             email
           />
         </div>
-        <div class="form-group">
+        <div class="input-group">
           <label for="password">Password</label>
           <input
+            pInputText
             type="password"
             id="password"
             class="form-control"
@@ -31,9 +32,8 @@
             minlength="6"
           />
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-top: 15px">{{isLoading ? 'Loading...' : 'Sign in'}}</button>
+        <p-button label="Submit" type="submit"></p-button>
           <p class="switch" (click)="isLogin = !isLogin">No account? Create a new account!</p>
           <p class="switch" (click)="isReset = !isReset">Forgot password? Reset here!</p>
       </form>
-    </div>
   </div>

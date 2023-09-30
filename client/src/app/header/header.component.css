@@ -1,0 +1,26 @@
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px
+}
+
+.p-menubar .p-menubar-list {
+  width: 100%;
+}
+
+.p-menubar .p-menubar-list .p-menuitem {
+  color: blue;
+  margin-left: auto;
+}
+
+.gapp {
+  margin-right: auto;
+}
+
+::ng-deep p-menubar.menucus {
+  display: flex !important;
+  justify-content: flex-end !important;
+  background: red;
+}

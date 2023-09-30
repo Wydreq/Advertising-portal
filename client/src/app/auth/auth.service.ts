@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {BehaviorSubject, catchError, tap, throwError} from "rxjs";
+import {BehaviorSubject, catchError, Subject, tap, throwError} from "rxjs";
 import {User} from "./user.model";
 import {Router} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 export interface AuthResponseData {
   token: string;
@@ -12,6 +13,8 @@ export interface AuthResponseData {
   user: {
     _id: string,
     email: string,
+    firstName: string,
+    lastName: string
   }
 }
 
@@ -20,6 +23,9 @@ export class AuthService {
   private tokenExpirationTimer: any;
   initialUser: User | null = null;
   user = new BehaviorSubject<User | null>(this.initialUser);
+  private loginSuccessSubject = new Subject<void>();
+
+  loginSuccess$ = this.loginSuccessSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -52,10 +58,17 @@ export class AuthService {
           resData.user.email,
           resData.user._id,
           resData.token,
-          resData.options.expires
+          resData.options.expires,
+          resData.user.firstName,
+          resData.user.lastName
         )
+        this.trigerLoginSuccess();
       })
     )
+  }
+
+  trigerLoginSuccess() {
+    this.loginSuccessSubject.next();
   }
 
   forgotPassword(email: string) {
@@ -85,6 +98,7 @@ export class AuthService {
   autoLogin() {
     // @ts-ignore
     const userData = JSON.parse(localStorage.getItem('userData'));
+    console.log(userData);
     if(!userData) {
       return;
     }
@@ -92,7 +106,9 @@ export class AuthService {
       userData.email,
       userData.id,
       userData._token,
-      userData.expiresIn
+      userData.expiresIn,
+      userData.firstName,
+      userData.lastName
     )
   }
 
@@ -111,9 +127,11 @@ export class AuthService {
     email: string,
     userId: string,
     token: string,
-    expiresIn: string
+    expiresIn: string,
+    firstName: string,
+    lastName: string
   ) {
-    const user = new User(email, userId, token, expiresIn)
+    const user = new User(email, userId, token, expiresIn, firstName, lastName)
     this.user.next(user);
     localStorage.setItem('userData',JSON.stringify(user));
   }
@@ -124,11 +142,17 @@ export class AuthService {
       return throwError(errorMessage);
     }
     switch (errorRes.error.error) {
+      case 'There is no user with that email':
+        errorMessage = 'Account with that email not found!'
+        break;
       case 'EMAIL_EXISTS':
         errorMessage = 'This email exists already';
         break;
-      case 'Invalid credentials!':
-        errorMessage = 'Invalid credentials!';
+      case 'Invalid credentials':
+        errorMessage = 'Invalid credentials';
+        break;
+      case 'Please provide an email and password':
+        errorMessage = 'Please insert email and password'
         break;
       case 'INVALID_PASSWORD':
         errorMessage = 'This password is not correct.';

@@ -16,6 +16,13 @@ import { ForgotPasswordModalComponent } from './auth/forgot-password-modal/forgo
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { MenubarModule } from 'primeng/menubar';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { MessagesModule } from 'primeng/messages';
+import { ToastModule } from 'primeng/toast';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -37,7 +44,14 @@ import { ToastComponent } from './shared/toast/toast.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MenubarModule,
+    InputTextModule,
+    ButtonModule,
+    DropdownModule,
+    MessagesModule,
+    ToastModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {

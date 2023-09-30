@@ -18,10 +18,12 @@ export class ForgotPasswordComponent {
   isLoading: boolean = false;
 
   onSubmit(form: NgForm) {
+    this.isLoading = true;
     let authObs: Observable<{}>;
     const token = this.route.snapshot.params['token'];
     if(form.value.password !== form.value.confirmpassword) {
       this.errorMessage = 'Passwords are not the same!';
+      this.isLoading = false;
       return;
     }
     authObs = this.authService.resetPassword(

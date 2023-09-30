@@ -11,8 +11,8 @@
 .alert-box {
   position: fixed;
   top: 3vh;
-  left: 15vw;
-  width: 70vw;
+  left: 30vw;
+  width: 40vw;
   padding: 16px;
   z-index: 100;
   background: white;
@@ -28,4 +28,10 @@ input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched{
   border: 1px solid red;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
