@@ -23,6 +23,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CardModule} from 'primeng/card';
+import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
+import {TableModule} from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { MenuModule } from 'primeng/menu';
 
 @NgModule({
   declarations: [
@@ -38,6 +43,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ForgotPasswordComponent,
     NotFoundComponent,
     ToastComponent,
+    AdminUsersComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +58,10 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     MessagesModule,
     ToastModule,
     BrowserAnimationsModule,
+    CardModule,
+    TableModule,
+    TagModule,
+    MenuModule
   ],
   providers: [
     {

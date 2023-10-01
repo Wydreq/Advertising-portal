@@ -11,6 +11,8 @@ dotenv.config({path: './config/config.env'});
 connectDB();
 
 const auth = require('./routes/auth');
+const offers = require('./routes/offers');
+const admin = require('./routes/admin');
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(cors({
 }))
 
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/offers', offers);
+app.use('/api/v1/admin', admin);
 
 app.use(errorHandler);
 

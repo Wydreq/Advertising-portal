@@ -19,8 +19,9 @@
   margin-right: auto;
 }
 
-::ng-deep p-menubar.menucus {
-  display: flex !important;
-  justify-content: flex-end !important;
-  background: red;
+::ng-deep p-menubarsub{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 5vw;
 }

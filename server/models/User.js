@@ -27,6 +27,11 @@ const UserSchema = mongoose.Schema({
         minLength: 6,
         select: false
     },
+    status: {
+        type: String,
+        default: 'active',
+        enum: ['active', 'blocked']
+    },
     dateOfBirth: {
         type: Date,
         required: [true, 'Please insert date of birth'],

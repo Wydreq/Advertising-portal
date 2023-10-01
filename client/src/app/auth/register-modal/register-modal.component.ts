@@ -83,7 +83,7 @@ export class RegisterModalComponent implements OnInit{
       this.signupForm.value.email,
       this.signupForm.value.password,
       this.signupForm.value.date,
-      this.signupForm.value.gender
+      this.signupForm.value.gender.value
     );
 
     authObs.subscribe(

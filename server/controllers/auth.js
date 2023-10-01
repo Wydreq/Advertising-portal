@@ -37,10 +37,14 @@ exports.login = asyncHandler(async (req, res, next) => {
     }
 
     //Check for user
-    const user = await User.findOne({ email }).select('+password').select('+fistName').select('+lastName');
+    const user = await User.findOne({ email }).select('+password').select('+fistName').select('+lastName').select('+status');
 
     if(!user) {
         return next(new ErrorResponse('Invalid credentials', 401));
+    }
+
+    if(user.status === 'blocked') {
+        return next(new ErrorResponse('Account is blocked', 401));
     }
 
     //Check if password matches

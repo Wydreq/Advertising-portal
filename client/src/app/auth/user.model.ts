@@ -5,7 +5,8 @@ export class User {
     private _token: string,
     public expiresIn: string,
     public firstName: string,
-    public lastName: string
+    public lastName: string,
+    public role: string
   ) {}
 
   get token() {

@@ -1,33 +1,68 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../auth/auth.service";
 import { Subscription } from 'rxjs';
-import {MenuItem} from "primeng/api";
+import {MenuItem, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  providers: [MessageService]
 })
 export class HeaderComponent implements  OnInit, OnDestroy {
 
   isAuthenticated = false;
   firstName: string | undefined  = '';
   lastName: string | undefined = '';
+  role: string | undefined = '';
   private userSub: Subscription | undefined;
   items: MenuItem[] | undefined;
   menuChanged:boolean = true;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private messageService: MessageService) {}
   ngOnInit() {
     this.userSub = this.authService.user.subscribe(user => {
       this.menuChanged = false;
       this.isAuthenticated = !!user;
+      this.firstName = user?.firstName;
+      this.lastName = user?.lastName;
+      this.role = user?.role;
       this.items = [
         {
-          label: `Profile`,
+          label: this.isAuthenticated ? `${this.firstName} ${this.lastName}` : 'Profile',
           icon: 'pi pi-fw pi-user',
           visible: this.isAuthenticated,
           items: [
+            {
+              label: 'Admin panel',
+              icon: 'pi pi-fw pi-star',
+              visible: this.role === 'admin',
+              items: [
+                {
+                  label: 'Manage users',
+                  icon: 'pi pi-fw pi-users',
+                  routerLink: '/admin/users'
+                },
+                {
+                  label: 'Manage offers',
+                  icon: 'pi pi-fw pi-shopping-cart',
+                },
+              ]
+            },
+            {
+              label: 'Offers',
+              icon: 'pi pi-fw pi-shopping-cart',
+              items: [
+                {
+                  label: 'Add new offer',
+                  icon: 'pi pi-fw pi-plus',
+                },
+                {
+                  label: 'Show my offers',
+                  icon: 'pi pi-fw pi-eye',
+                }
+              ]
+            },
             {
               label: 'Settings',
               icon: 'pi pi-fw pi-cog',
@@ -51,8 +86,8 @@ export class HeaderComponent implements  OnInit, OnDestroy {
         }
       ];
       this.menuChanged = true;
-      this.firstName = user?.firstName;
-      this.lastName = user?.lastName
+      this.messageService.clear();
+      this.messageService.add({key: "toast3", severity: 'success', summary: 'Success', detail: this.isAuthenticated ? 'Successfully logged in!' : 'Successfully logged out!' });
     });
   }
 

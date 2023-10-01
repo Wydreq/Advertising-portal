@@ -14,7 +14,8 @@ export interface AuthResponseData {
     _id: string,
     email: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    role: string
   }
 }
 
@@ -23,9 +24,6 @@ export class AuthService {
   private tokenExpirationTimer: any;
   initialUser: User | null = null;
   user = new BehaviorSubject<User | null>(this.initialUser);
-  private loginSuccessSubject = new Subject<void>();
-
-  loginSuccess$ = this.loginSuccessSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -60,15 +58,11 @@ export class AuthService {
           resData.token,
           resData.options.expires,
           resData.user.firstName,
-          resData.user.lastName
+          resData.user.lastName,
+          resData.user.role
         )
-        this.trigerLoginSuccess();
       })
     )
-  }
-
-  trigerLoginSuccess() {
-    this.loginSuccessSubject.next();
   }
 
   forgotPassword(email: string) {
@@ -98,7 +92,6 @@ export class AuthService {
   autoLogin() {
     // @ts-ignore
     const userData = JSON.parse(localStorage.getItem('userData'));
-    console.log(userData);
     if(!userData) {
       return;
     }
@@ -108,7 +101,8 @@ export class AuthService {
       userData._token,
       userData.expiresIn,
       userData.firstName,
-      userData.lastName
+      userData.lastName,
+      userData.role
     )
   }
 
@@ -129,9 +123,10 @@ export class AuthService {
     token: string,
     expiresIn: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    role: string
   ) {
-    const user = new User(email, userId, token, expiresIn, firstName, lastName)
+    const user = new User(email, userId, token, expiresIn, firstName, lastName, role)
     this.user.next(user);
     localStorage.setItem('userData',JSON.stringify(user));
   }
@@ -153,6 +148,9 @@ export class AuthService {
         break;
       case 'Please provide an email and password':
         errorMessage = 'Please insert email and password'
+        break;
+      case 'Account is blocked':
+        errorMessage = 'Account is blocked. Please contact to our administration';
         break;
       case 'INVALID_PASSWORD':
         errorMessage = 'This password is not correct.';
