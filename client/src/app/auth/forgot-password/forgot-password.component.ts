@@ -1,28 +1,36 @@
 import { Component } from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {AuthService} from "../auth.service";
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.css']
+  styleUrls: ['./forgot-password.component.css'],
 })
 export class ForgotPasswordComponent {
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) {}
-
-  errorMessage: string = '';
-  successMessage: string = '';
   isLoading: boolean = false;
+  messages: Message[] = [];
 
   onSubmit(form: NgForm) {
     this.isLoading = true;
     let authObs: Observable<{}>;
     const token = this.route.snapshot.params['token'];
-    if(form.value.password !== form.value.confirmpassword) {
-      this.errorMessage = 'Passwords are not the same!';
+    if (form.value.password !== form.value.confirmpassword) {
+      this.messages = [
+        {
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Passwords are not the same!',
+        },
+      ];
       this.isLoading = false;
       return;
     }
@@ -30,18 +38,24 @@ export class ForgotPasswordComponent {
       form.value.password,
       form.value.confirmpassword,
       token
-    )
+    );
     authObs.subscribe(
-      resData => {
+      (resData) => {
         this.isLoading = false;
-        this.errorMessage = '';
-        this.successMessage = 'Password has been changed!';
+        this.messages = [
+          {
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Password has been changed!',
+          },
+        ];
       },
-      error => {
+      (error) => {
         this.isLoading = false;
-        this.successMessage = '';
-        this.errorMessage = error;
+        this.messages = [
+          { severity: 'error', summary: 'Error', detail: error },
+        ];
       }
-    )
+    );
   }
 }

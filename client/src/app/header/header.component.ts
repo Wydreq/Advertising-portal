@@ -1,27 +1,29 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from "../auth/auth.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
-import {MenuItem, MessageService} from "primeng/api";
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
-export class HeaderComponent implements  OnInit, OnDestroy {
-
+export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;
-  firstName: string | undefined  = '';
+  firstName: string | undefined = '';
   lastName: string | undefined = '';
   role: string | undefined = '';
   private userSub: Subscription | undefined;
   items: MenuItem[] | undefined;
-  menuChanged:boolean = true;
+  menuChanged: boolean = true;
 
-  constructor(private authService: AuthService, private messageService: MessageService) {}
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService
+  ) {}
   ngOnInit() {
-    this.userSub = this.authService.user.subscribe(user => {
+    this.userSub = this.authService.user.subscribe((user) => {
       this.menuChanged = false;
       this.isAuthenticated = !!user;
       this.firstName = user?.firstName;
@@ -29,7 +31,9 @@ export class HeaderComponent implements  OnInit, OnDestroy {
       this.role = user?.role;
       this.items = [
         {
-          label: this.isAuthenticated ? `${this.firstName} ${this.lastName}` : 'Profile',
+          label: this.isAuthenticated
+            ? `${this.firstName} ${this.lastName}`
+            : 'Profile',
           icon: 'pi pi-fw pi-user',
           visible: this.isAuthenticated,
           items: [
@@ -41,13 +45,13 @@ export class HeaderComponent implements  OnInit, OnDestroy {
                 {
                   label: 'Manage users',
                   icon: 'pi pi-fw pi-users',
-                  routerLink: '/admin/users'
+                  routerLink: '/admin/users',
                 },
                 {
                   label: 'Manage offers',
                   icon: 'pi pi-fw pi-shopping-cart',
                 },
-              ]
+              ],
             },
             {
               label: 'Offers',
@@ -56,38 +60,49 @@ export class HeaderComponent implements  OnInit, OnDestroy {
                 {
                   label: 'Add new offer',
                   icon: 'pi pi-fw pi-plus',
+                  routerLink: '/my-offers/new',
                 },
                 {
                   label: 'Show my offers',
                   icon: 'pi pi-fw pi-eye',
-                }
-              ]
+                  routerLink: '/my-offers',
+                },
+              ],
             },
             {
               label: 'Settings',
               icon: 'pi pi-fw pi-cog',
-            }
+            },
           ],
-          styleClass: 'menucus'
+          styleClass: 'menucus',
         },
         {
           label: 'Logout',
           icon: 'pi pi-fw pi-power-off',
-          command: () => {this.onLogout()},
+          command: () => {
+            this.onLogout();
+          },
           visible: this.isAuthenticated,
-          styleClass: 'menucus'
+          styleClass: 'menucus',
         },
         {
-          label: "Sign in",
+          label: 'Sign in',
           icon: '',
           routerLink: '/auth',
           visible: !this.isAuthenticated,
-          styleClass: 'menucus'
-        }
+          styleClass: 'menucus',
+        },
       ];
       this.menuChanged = true;
       this.messageService.clear();
-      this.messageService.add({key: "toast3", severity: 'success', summary: 'Success', detail: this.isAuthenticated ? 'Successfully logged in!' : 'Successfully logged out!' });
+      this.messageService.add({
+        key: 'toast3',
+        severity: 'success',
+        summary: 'Success',
+        detail: this.isAuthenticated
+          ? 'Successfully logged in!'
+          : 'Successfully logged out!',
+      });
     });
   }
 

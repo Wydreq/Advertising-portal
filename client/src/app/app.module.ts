@@ -4,14 +4,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AuthComponent } from './auth/auth.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './shared/modal/modal.component';
 import { RegisterModalComponent } from './auth/register-modal/register-modal.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { HomeComponent } from './home/home.component';
-import {AuthInterceptorService} from "./auth/auth-interceptor.service";
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { ForgotPasswordModalComponent } from './auth/forgot-password-modal/forgot-password-modal.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -22,12 +22,14 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CardModule} from 'primeng/card';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CardModule } from 'primeng/card';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
+import { MyOffersComponent } from './my-offers/my-offers.component';
+import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { MenuModule } from 'primeng/menu';
     NotFoundComponent,
     ToastComponent,
     AdminUsersComponent,
+    MyOffersComponent,
+    NewOfferComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,15 +65,15 @@ import { MenuModule } from 'primeng/menu';
     CardModule,
     TableModule,
     TagModule,
-    MenuModule
+    MenuModule,
   ],
   providers: [
     {
-      provide : HTTP_INTERCEPTORS,
+      provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
-      multi   : true,
+      multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

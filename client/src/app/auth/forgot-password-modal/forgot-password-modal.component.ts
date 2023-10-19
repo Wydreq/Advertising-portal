@@ -1,38 +1,40 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {NgForm} from "@angular/forms";
-import {AuthService} from "../auth.service";
-import {Observable} from "rxjs";
+import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-forgot-password-modal',
   templateUrl: './forgot-password-modal.component.html',
-  styleUrls: ['./forgot-password-modal.component.css']
+  styleUrls: ['./forgot-password-modal.component.css'],
 })
 export class ForgotPasswordModalComponent {
-
   constructor(private authService: AuthService) {}
 
   @Output() close = new EventEmitter<void>();
+  @Output() resetSuccess = new EventEmitter<void>();
   isLoading: boolean = false;
-  errorMessage: string = '';
-  successMessage: string = '';
+  messages: Message[] = [];
 
   onSubmit(form: NgForm) {
     let authObs: Observable<{}>;
     this.isLoading = true;
     authObs = this.authService.forgotPassword(form.value.email);
     authObs.subscribe(
-      resData => {
+      (resData) => {
         this.isLoading = false;
-        this.errorMessage = '';
-        this.successMessage = 'Mail with reset link has been sent!';
+        this.messages = [];
+        this.resetSuccess.emit();
+        this.close.emit();
       },
-      error => {
+      (error) => {
         this.isLoading = false;
-        this.successMessage = '';
-        this.errorMessage = error;
+        this.messages = [
+          { severity: 'error', summary: 'Error', detail: error },
+        ];
       }
-    )
+    );
   }
 
   onClose() {

@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   z-index: 50;
 }
 
@@ -16,7 +16,7 @@
   padding: 16px;
   z-index: 100;
   background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 10px;
 }
 
@@ -26,7 +26,7 @@
 
 input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched{
+select.ng-invalid.ng-touched {
   border: 1px solid red;
 }
 
@@ -34,4 +34,11 @@ select.ng-invalid.ng-touched{
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+}
+
+.btn-cont {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }

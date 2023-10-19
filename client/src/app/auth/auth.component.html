@@ -1,39 +1,55 @@
-<app-register-modal (close)="isLogin = true" (registerSuccess)="registerSuccess()" *ngIf="!isLogin"></app-register-modal>
-<app-forgot-password-modal (close)="isReset = false" *ngIf="isReset"></app-forgot-password-modal>
+<app-register-modal
+  (close)="isLogin = true"
+  (registerSuccess)="registerSuccess()"
+  *ngIf="!isLogin"
+></app-register-modal>
+<app-forgot-password-modal
+  (close)="isReset = false"
+  *ngIf="isReset"
+  (resetSuccess)="resetSuccess()"
+></app-forgot-password-modal>
 <div class="container">
   <h1 style="margin-top: 5%; margin-bottom: 20px">Sign in!</h1>
-     <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
-      <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-      <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
-        <div class="input-group">
-          <label htmlFor="email">Email</label>
-          <input
-            pInputText
-            type="email"
-            id="email"
-            class="form-control"
-            ngModel
-            name="email"
-            aria-describedby="username-help"
-            required
-            email
-          />
-        </div>
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input
-            pInputText
-            type="password"
-            id="password"
-            class="form-control"
-            ngModel
-            name="password"
-            required
-            minlength="6"
-          />
-        </div>
-        <p-button label="Submit" type="submit"></p-button>
-          <p class="switch" (click)="isLogin = !isLogin">No account? Create a new account!</p>
-          <p class="switch" (click)="isReset = !isReset">Forgot password? Reset here!</p>
-      </form>
-  </div>
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
+  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
+    <div class="input-group">
+      <label htmlFor="email">Email</label>
+      <input
+        pInputText
+        type="email"
+        id="email"
+        class="form-control"
+        ngModel
+        name="email"
+        aria-describedby="username-help"
+        required
+        email
+      />
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input
+        pInputText
+        type="password"
+        id="password"
+        class="form-control"
+        ngModel
+        name="password"
+        required
+        minlength="6"
+      />
+    </div>
+    <p-button label="Submit" type="submit"></p-button>
+    <p class="switch" (click)="isLogin = !isLogin">
+      No account? Create a new account!
+    </p>
+    <p class="switch" (click)="isReset = !isReset">
+      Forgot password? Reset here!
+    </p>
+  </form>
+</div>

@@ -1,10 +1,14 @@
 <div class="backdrop" (click)="onClose()"></div>
 <div class="alert-box">
   <h2 style="margin-bottom: 30px">Create new account!</h2>
-  <div *ngIf="isLoading" style="text-align: center;">
+  <div *ngIf="isLoading" style="text-align: center">
     <app-loading-spinner></app-loading-spinner>
   </div>
-  <p-messages [(value)]="messages" [enableService]="false" [closable]="true"></p-messages>
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
   <form *ngIf="!isLoading" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="input-group sm:col-12 md:col-6">
@@ -64,16 +68,17 @@
       </div>
       <div class="input-group md:col-12 sm:col-6">
         <label for="date">Sex</label>
-<!--        <select class="form-select" aria-label="Default select example" formControlName="gender">-->
-<!--          <option value="male">Male</option>-->
-<!--          <option value="female">Female</option>-->
-<!--          <option value="other">Other</option>-->
-<!--        </select>-->
-        <p-dropdown formControlName="gender" [options]="genders" optionLabel="name"></p-dropdown>
+        <p-dropdown
+          formControlName="gender"
+          [options]="genders"
+          optionLabel="name"
+        ></p-dropdown>
       </div>
     </div>
-    <div class="alert-box-actions" style="margin-top: 30px">
-      <p-button type="submit" class="mr-1" [disabled]="!signupForm.valid">{{isLoading ? 'Loading...' : 'Register'}}</p-button>
+    <div class="alert-box-actions btn-cont" style="margin-top: 30px">
+      <p-button type="submit" class="mr-1" [disabled]="!signupForm.valid">{{
+        isLoading ? "Loading..." : "Register"
+      }}</p-button>
       <p-button type="button" (onClick)="onClose()">Close</p-button>
     </div>
   </form>
