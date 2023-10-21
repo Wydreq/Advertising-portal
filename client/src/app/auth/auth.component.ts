@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,13 +12,22 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./auth.component.css'],
   providers: [MessageService],
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   isLogin: boolean = true;
   isReset: boolean = false;
   isLoading: boolean = false;
   messages: Message[] = [];
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private messagesService: MessagesService
+  ) {}
+
+  ngOnInit(): void {
+    this.messagesService.messages$.subscribe((messages) => {
+      this.messages = messages;
+    });
+  }
 
   onSubmit(form: NgForm) {
     let authObs: Observable<{}>;
@@ -25,36 +35,28 @@ export class AuthComponent {
     authObs = this.authService.login(form.value.email, form.value.password);
     authObs.subscribe(
       (resData) => {
-        console.log(resData);
         this.isLoading = false;
-        this.messages = [];
       },
       (error) => {
         this.isLoading = false;
-        this.messages = [
-          { severity: 'error', summary: 'Error', detail: error },
-        ];
+        this.messagesService.setMessage('error', 'Error', error);
       }
     );
   }
 
   registerSuccess() {
-    this.messages = [
-      {
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Account has been created! Log in',
-      },
-    ];
+    this.messagesService.setMessage(
+      'success',
+      'Success',
+      'Account has been created!'
+    );
   }
 
   resetSuccess() {
-    this.messages = [
-      {
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Email with reset link has been sent!',
-      },
-    ];
+    this.messagesService.setMessage(
+      'success',
+      'Success',
+      'Email with reset link has been sent!'
+    );
   }
 }

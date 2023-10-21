@@ -9,7 +9,7 @@
     [enableService]="false"
     [closable]="true"
   ></p-messages>
-  <form *ngIf="!isLoading" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
     <div class="row">
       <div class="input-group sm:col-12 md:col-6">
         <label for="fName">First name</label>

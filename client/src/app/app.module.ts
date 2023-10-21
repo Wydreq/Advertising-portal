@@ -11,7 +11,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { HomeComponent } from './home/home.component';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { ForgotPasswordModalComponent } from './auth/forgot-password-modal/forgot-password-modal.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { NotFoundComponent } from './not-found/not-found.component';

@@ -1,36 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Message } from 'primeng/api';
+import { MessagesService } from 'src/app/services/messages.service';
 
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css'],
 })
-export class ForgotPasswordComponent {
+export class ForgotPasswordComponent implements OnInit {
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messagesService: MessagesService
   ) {}
 
   isLoading: boolean = false;
   messages: Message[] = [];
+
+  ngOnInit(): void {
+    this.messagesService.messages$.subscribe((messages) => {
+      this.messages = messages;
+    });
+  }
 
   onSubmit(form: NgForm) {
     this.isLoading = true;
     let authObs: Observable<{}>;
     const token = this.route.snapshot.params['token'];
     if (form.value.password !== form.value.confirmpassword) {
-      this.messages = [
-        {
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Passwords are not the same!',
-        },
-      ];
+      this.messagesService.setMessage(
+        'error',
+        'Error',
+        'Passwords are not the same'
+      );
       this.isLoading = false;
       return;
     }
@@ -42,19 +48,15 @@ export class ForgotPasswordComponent {
     authObs.subscribe(
       (resData) => {
         this.isLoading = false;
-        this.messages = [
-          {
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Password has been changed!',
-          },
-        ];
+        this.messagesService.setMessage(
+          'success',
+          'Success',
+          'Password has been changed'
+        );
       },
       (error) => {
         this.isLoading = false;
-        this.messages = [
-          { severity: 'error', summary: 'Error', detail: error },
-        ];
+        this.messagesService.setMessage('error', 'Error', error);
       }
     );
   }
