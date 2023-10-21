@@ -30,7 +30,7 @@ import { TagModule } from 'primeng/tag';
 import { MenuModule } from 'primeng/menu';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
-
+import { InputSwitchModule } from 'primeng/inputswitch';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,6 +66,7 @@ import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
     TableModule,
     TagModule,
     MenuModule,
+    InputSwitchModule,
   ],
   providers: [
     {

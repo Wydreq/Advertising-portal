@@ -1,1 +1,32 @@
-<p>new-offer works!</p>
+<div class="fullCont">
+  <h1>Create a new offer</h1>
+  <form>
+    <div class="nameCatCont">
+      <div class="p-inputgroup">
+        <input type="text" pInputText placeholder="Offer name" />
+        <span class="p-inputgroup-addon">12/50</span>
+      </div>
+      <p-dropdown
+        formControlName="city"
+        [options]=""
+        optionLabel="name"
+      ></p-dropdown>
+    </div>
+    <div class="p-inputgroup">
+      <textarea pInputText placeholder="Description"></textarea>
+      <span class="p-inputgroup-addon">12/50</span>
+    </div>
+    <div class="priceCont">
+      <div class="p-inputgroup">
+        <input type="text" class="priceInput" pInputText placeholder="Price" />
+        <span class="p-inputgroup-addon">$</span>
+      </div>
+      <span>Is it constant price?</span>
+      <p-inputSwitch></p-inputSwitch>
+    </div>
+    <div class="p-inputgroup">
+      <input type="text" pInputText placeholder="Phone number" />
+      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-phone"></i></span>
+    </div>
+  </form>
+</div>
