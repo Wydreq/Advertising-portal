@@ -1,3 +1,4 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <app-register-modal
   (close)="isLogin = true"
   (registerSuccess)="registerSuccess()"
@@ -15,7 +16,6 @@
     [enableService]="false"
     [closable]="true"
   ></p-messages>
-  <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
   <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
     <div class="input-group">
       <label htmlFor="email">Email</label>
