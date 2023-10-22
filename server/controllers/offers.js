@@ -10,6 +10,17 @@ exports.getOffers = asyncHandler(async (req, res, next) => {
   res.status(200).json(res.advancedResults);
 });
 
+// @desc        Get single offer
+// @route       GET /api/v1/offers/:id
+// @access      Private
+exports.getOffer = asyncHandler(async (req, res, next) => {
+  const offer = await Offer.findById(req.params.id);
+  res.status(200).json({
+    success: true,
+    data: offer,
+  });
+});
+
 // @desc    Uploading photo
 // @route   POST /api/v1/offers/photoupload
 // @access  Private

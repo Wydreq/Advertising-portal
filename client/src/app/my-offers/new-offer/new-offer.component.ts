@@ -64,21 +64,21 @@ export class NewOfferComponent implements OnInit {
   }
 
   onFileSelect(event: any) {
-    if (event.target.files.length > 0) {
-      console.log(event.target.files[0]);
-      let offerObs: Observable<{}>;
-      console.log(this.photoUrl);
-      const image = './mock1.PNG';
-      offerObs = this.offersService.uploadPhoto(image);
-      offerObs.subscribe(
-        (resData) => {
-          console.log(resData);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    }
+    // if (event.target.files.length > 0) {
+    //   const file = event.target.files[0];
+    //   const formData = new FormData();
+    //   formData.append('photo', file, file.name);
+    //   let offerObs: Observable<{}>;
+    //   offerObs = this.offersService.uploadPhoto(formData);
+    //   offerObs.subscribe(
+    //     (resData) => {
+    //       console.log(resData);
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
+    // }
   }
 
   onSubmitForm() {
@@ -90,7 +90,7 @@ export class NewOfferComponent implements OnInit {
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
-      photo: this.photoUrl,
+      photo: 'no-photo.jpg',
     };
     let offerObs: Observable<{}>;
     this.isLoading = true;

@@ -1,21 +1,37 @@
-import {Component, OnInit} from '@angular/core';
-
-import {HttpClient} from "@angular/common/http";
-import {MessageService} from "primeng/api";
+import { Component, OnInit } from '@angular/core';
+import { Message, MessageService } from 'primeng/api';
+import { OffersService } from '../services/offers.service';
+import { OfferItem, OffersRes } from '../models/offers.model';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class HomeComponent implements OnInit {
+  loadedOffers: OfferItem[] | null = [];
+  messages: Message[] = [];
+  isLoading: boolean = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private offersService: OffersService,
+    private messagesService: MessagesService
+  ) {}
 
   ngOnInit() {
-      this.http.get<{}>('http://localhost:5000/api/v1/auth/me').subscribe(resData => {
-      // console.log(resData);
+    this.messagesService.messages$.subscribe((messages) => {
+      this.messages = messages;
     });
+    this.offersService.isLoading.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+    this.offersService.offers.subscribe((offers) => {
+      this.loadedOffers = offers.data;
+    });
+    if (this.loadedOffers!.length === 0) {
+      this.offersService.getAllOffers();
+    }
   }
 }

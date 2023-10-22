@@ -1,0 +1,23 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div class="fullContainer">
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
+  <div class="offerContainer" *ngIf="offer">
+    <div class="imageTitle">
+      <p-image
+        src="../../../assets/no-photo.jpg"
+        alt="offer image"
+        width="200px"
+        class="image"
+      ></p-image>
+      <span class="title">{{ offer.name }}</span>
+    </div>
+    <div class="descriptionCont">
+      <h3>Offer description</h3>
+      <span>{{ offer.description }}</span>
+    </div>
+  </div>
+</div>

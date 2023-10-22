@@ -9,6 +9,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
+import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,6 +17,11 @@ const routes: Routes = [
   { path: 'auth/resetpassword/:token', component: ForgotPasswordComponent },
   { path: 'home', canActivate: [AuthGuard], component: HomeComponent },
   { path: 'my-offers', canActivate: [AuthGuard], component: MyOffersComponent },
+  {
+    path: 'offers/:id',
+    canActivate: [AuthGuard],
+    component: OfferDetailsComponent,
+  },
   {
     path: 'my-offers/new',
     canActivate: [AuthGuard],

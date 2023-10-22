@@ -1,0 +1,35 @@
+.fullContainer {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offerContainer {
+  width: 70%;
+  background-color: whitesmoke;
+  border: 1px solid rgb(219, 219, 219);
+  margin-top: 30px;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.imageTitle {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 15px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 30px;
+}
+
+.descriptionCont {
+  margin-top: 30px;
+}

@@ -31,6 +31,8 @@ import { MenuModule } from 'primeng/menu';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
+import { ImageModule } from 'primeng/image';
+import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +50,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     AdminUsersComponent,
     MyOffersComponent,
     NewOfferComponent,
+    OfferDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +70,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
     TagModule,
     MenuModule,
     InputSwitchModule,
+    ImageModule,
   ],
   providers: [
     {

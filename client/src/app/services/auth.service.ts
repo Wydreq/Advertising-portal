@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
-import { User } from '../auth/user.model';
+import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 

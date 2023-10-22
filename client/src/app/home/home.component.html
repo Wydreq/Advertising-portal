@@ -1,7 +1,42 @@
-<div class="searchbarContainer">
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div class="fullContainer">
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
+  <div class="searchbarContainer">
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input type="text" pInputText placeholder="Search"/>
+      <input type="text" pInputText placeholder="Search" />
     </span>
-  <button pButton pRipple type="button" icon="pi pi-search" class="p-button-rounded p-button-success"></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      icon="pi pi-search"
+      class="p-button-rounded p-button-success"
+    ></button>
+  </div>
+  <div class="offersContainer">
+    <p class="not-found" *ngIf="!isLoading && !loadedOffers">No offers found</p>
+    <div *ngFor="let offer of loadedOffers" class="cardContainer">
+      <p-image
+        src="../../assets/no-photo.jpg"
+        alt="no-photo"
+        width="150px"
+        class="imageCont"
+      ></p-image>
+      <div class="infoContainer">
+        <span class="offerName">{{ offer.name }}</span>
+        <span class="offerPrice">{{ offer.price }}$</span>
+        <p-button
+          type="button"
+          class="detailsBtn"
+          [routerLink]="['/offers', offer.id]"
+          >Details</p-button
+        >
+      </div>
+    </div>
+  </div>
 </div>
