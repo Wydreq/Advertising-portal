@@ -4,6 +4,7 @@ import { OffersService } from 'src/app/services/offers.service';
 import { Observable } from 'rxjs';
 import { Message } from 'primeng/api';
 import { MessagesService } from 'src/app/services/messages.service';
+import { Router } from '@angular/router';
 
 interface Category {
   name: string;
@@ -24,7 +25,8 @@ export class NewOfferComponent implements OnInit {
 
   constructor(
     private offersService: OffersService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -59,26 +61,15 @@ export class NewOfferComponent implements OnInit {
         Validators.maxLength(20),
       ]),
       address: new FormControl(null, Validators.required),
-      photo: new FormControl(null),
+      image: new FormControl(null),
     });
   }
 
   onFileSelect(event: any) {
-    // if (event.target.files.length > 0) {
-    //   const file = event.target.files[0];
-    //   const formData = new FormData();
-    //   formData.append('photo', file, file.name);
-    //   let offerObs: Observable<{}>;
-    //   offerObs = this.offersService.uploadPhoto(formData);
-    //   offerObs.subscribe(
-    //     (resData) => {
-    //       console.log(resData);
-    //     },
-    //     (err) => {
-    //       console.log(err);
-    //     }
-    //   );
-    // }
+    const file = event.target.files[0];
+    this.newOfferForm.patchValue({
+      image: file,
+    });
   }
 
   onSubmitForm() {
@@ -90,11 +81,14 @@ export class NewOfferComponent implements OnInit {
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
-      photo: 'no-photo.jpg',
     };
+
+    const formData = new FormData();
+    formData.append('image', this.newOfferForm.value.image);
+
     let offerObs: Observable<{}>;
     this.isLoading = true;
-    offerObs = this.offersService.createNewOffer(sendingForm);
+    offerObs = this.offersService.createNewOffer(sendingForm, formData);
     offerObs.subscribe(
       (resData) => {
         this.isLoading = false;
@@ -103,6 +97,7 @@ export class NewOfferComponent implements OnInit {
           'Success',
           'Offer has been added!'
         );
+        this.router.navigate(['/my-offers']);
       },
       (error) => {
         this.isLoading = false;

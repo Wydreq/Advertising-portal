@@ -1,1 +1,28 @@
-<p>my-offers works!</p>
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<p-messages
+  [(value)]="messages"
+  [enableService]="false"
+  [closable]="true"
+></p-messages>
+<div class="fullCont">
+  <h1 *ngIf="offersLength === 0 && !isLoading">No offers found</h1>
+  <div class="offerCard" *ngFor="let offer of userOffers">
+    <p-image
+      src="../../../assets/no-photo.jpg"
+      alt="offer image"
+      width="150px"
+      class="image"
+    ></p-image>
+    <h3>{{ offer.name }}</h3>
+    <div class="buttonContainer">
+      <button pButton icon="pi pi-eye" (click)="showOffer(offer.id)"></button>
+      <button pButton icon="pi pi-pencil" class="p-button-warning"></button>
+      <button
+        pButton
+        icon="pi pi-trash"
+        class="p-button-danger"
+        (click)="deleteOffer(offer.id)"
+      ></button>
+    </div>
+  </div>
+</div>

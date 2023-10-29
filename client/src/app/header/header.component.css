@@ -11,16 +11,17 @@
   width: 100%;
 }
 
-.p-menubar .p-menubar-list .p-menuitem {
+.p-menubar .p-menubar-list .p-menuitem:last-child {
   color: blue;
+  width: 100%;
   margin-left: auto;
 }
 
-.gapp {
+/* .gapp {
   margin-right: auto;
 }
 
-::ng-deep p-menubarsub{
+::ng-deep p-menubarsub {
   width: 100%;
   display: flex;
   justify-content: flex-end;

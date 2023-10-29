@@ -5,7 +5,6 @@ const colors = require('colors');
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
-const fileupload = require('express-fileupload');
 
 dotenv.config({ path: './config/config.env' });
 
@@ -14,7 +13,6 @@ connectDB();
 const auth = require('./routes/auth');
 const offers = require('./routes/offers');
 const admin = require('./routes/admin');
-const fileUpload = require('express-fileupload');
 
 const app = express();
 
@@ -25,9 +23,6 @@ app.use(
     origin: 'http://localhost:4200',
   })
 );
-
-//File uploading
-app.use(fileUpload());
 
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/offers', offers);
