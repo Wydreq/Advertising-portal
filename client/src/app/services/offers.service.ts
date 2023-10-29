@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OffersRes } from '../models/offers.model';
 import { OfferRes } from '../my-offers/offer-details/offer-details.component';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { encode } from 'base64-arraybuffer';
 
 @Injectable({
   providedIn: 'root',
@@ -50,22 +49,16 @@ export class OffersService {
   }
 
   createNewOffer(offer: any, image: any): Observable<any> {
-    console.log(image);
-    return this.http.post(
-      'http://localhost:5000/api/v1/offers/uploadPhoto',
-      image
-    );
     return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
   }
 
-  uploadPhoto(photo: FormData) {
-    const HttpUploadOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
-    };
+  uploadPhoto(photo: any) {
+    const formData: FormData = new FormData();
+
+    formData.append('image', photo);
     return this.http.post(
-      `http://localhost:5000/api/v1/offers/photoupload`,
-      photo,
-      HttpUploadOptions
+      `http://localhost:5000/api/v1/offers/upload/photo`,
+      formData
     );
   }
 

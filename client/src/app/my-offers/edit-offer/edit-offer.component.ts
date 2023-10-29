@@ -62,7 +62,6 @@ export class EditOfferComponent {
         Validators.required,
         Validators.maxLength(20),
       ]),
-      address: new FormControl(null, Validators.required),
       image: new FormControl(null),
     });
 
@@ -71,6 +70,7 @@ export class EditOfferComponent {
       this.isLoading = isLoading;
     });
     this.offersService.getSingleOffer(id).subscribe((offerRes) => {
+      console.log(offerRes);
       this.isLoading = true;
       this.newOfferForm.patchValue({
         name: offerRes.data.name,
@@ -79,7 +79,6 @@ export class EditOfferComponent {
         price: offerRes.data.price,
         negotiate: offerRes.data.negotiate,
         phone: offerRes.data.phone,
-        address: null,
         image: offerRes.data.phone,
       });
       this.isLoading = false;
@@ -101,7 +100,6 @@ export class EditOfferComponent {
       price: this.newOfferForm.value.price,
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
-      address: this.newOfferForm.value.address,
     };
 
     const formData = new FormData();

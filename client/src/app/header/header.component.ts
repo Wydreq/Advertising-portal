@@ -31,6 +31,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.role = user?.role;
       this.items = [
         {
+          label: 'Home',
+          icon: 'pi pi-fw pi-home',
+          visible: this.isAuthenticated,
+          styleClass: 'menucus',
+          routerLink: '/home',
+        },
+        {
           label: this.isAuthenticated
             ? `${this.firstName} ${this.lastName}`
             : 'Profile',

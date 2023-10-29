@@ -11,6 +11,10 @@ interface Category {
   code: string;
 }
 
+class ImageSnippet {
+  constructor(public src: string, public file: File) {}
+}
+
 @Component({
   selector: 'app-new-offer',
   templateUrl: './new-offer.component.html',
@@ -22,6 +26,7 @@ export class NewOfferComponent implements OnInit {
   isLoading: boolean = false;
   messages: Message[] = [];
   photoUrl: string = '';
+  selectedFile?: ImageSnippet;
 
   constructor(
     private offersService: OffersService,
@@ -65,11 +70,30 @@ export class NewOfferComponent implements OnInit {
     });
   }
 
-  onFileSelect(event: any) {
-    const file = event.target.files[0];
+  setAddress(address: string) {
     this.newOfferForm.patchValue({
-      image: file,
+      address: address,
     });
+  }
+
+  onFileSelect(imageInput: any) {
+    const file: File = imageInput.files[0];
+    const reader = new FileReader();
+
+    reader.addEventListener('load', (event: any) => {
+      this.selectedFile = new ImageSnippet(event.target.result, file);
+
+      this.offersService.uploadPhoto(this.selectedFile.file).subscribe(
+        (res) => {
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    });
+
+    reader.readAsDataURL(file);
   }
 
   onSubmitForm() {

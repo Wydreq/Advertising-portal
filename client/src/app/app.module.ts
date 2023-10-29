@@ -34,6 +34,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ImageModule } from 'primeng/image';
 import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
 import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
+import { AutoCompleteComponent } from './shared/auto-complete/auto-complete.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,6 +54,7 @@ import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component'
     NewOfferComponent,
     OfferDetailsComponent,
     EditOfferComponent,
+    AutoCompleteComponent,
   ],
   imports: [
     BrowserModule,

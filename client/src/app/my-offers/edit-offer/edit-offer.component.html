@@ -15,7 +15,9 @@
           placeholder="Offer name"
           formControlName="name"
         />
-        <span class="p-inputgroup-addon">12/50</span>
+        <span class="p-inputgroup-addon"
+          >{{ newOfferForm.get("name")?.value?.length }}/50</span
+        >
       </div>
       <p-dropdown
         [options]="categories"
@@ -29,7 +31,9 @@
         placeholder="Description"
         formControlName="description"
       ></textarea>
-      <span class="p-inputgroup-addon">12/50</span>
+      <span class="p-inputgroup-addon"
+        >{{ newOfferForm.get("description")?.value?.length }}/500</span
+      >
     </div>
     <div class="priceCont">
       <div class="p-inputgroup">
@@ -53,15 +57,6 @@
         formControlName="phone"
       />
       <span class="p-inputgroup-addon"><i class="pi pi-fw pi-phone"></i></span>
-    </div>
-    <div class="p-inputgroup">
-      <input
-        type="text"
-        pInputText
-        placeholder="Address"
-        formControlName="address"
-      />
-      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-home"></i></span>
     </div>
     <div class="p-inputgroup">
       <input

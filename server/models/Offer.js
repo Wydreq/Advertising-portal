@@ -58,6 +58,12 @@ const OfferSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    status: {
+      type: String,
+      required: true,
+      default: 'new',
+      enum: ['new', 'active', 'finished'],
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -91,7 +97,6 @@ OfferSchema.pre('save', async function (next) {
     zipcode: loc[0].zipcode,
     country: loc[0].countryCode,
   };
-  this.address = undefined;
   next();
 });
 
