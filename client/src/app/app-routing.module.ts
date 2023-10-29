@@ -10,6 +10,7 @@ import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
 import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
+import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: 'my-offers/new',
     canActivate: [AuthGuard],
     component: NewOfferComponent,
+  },
+  {
+    path: 'my-offers/edit/:id',
+    canActivate: [AuthGuard],
+    component: EditOfferComponent,
   },
   {
     path: 'admin',

@@ -50,11 +50,11 @@ export class OffersService {
   }
 
   createNewOffer(offer: any, image: any): Observable<any> {
-    // console.log(image);
-    // return this.http.post(
-    //   'http://localhost:5000/api/v1/offers/uploadPhoto',
-    //   image
-    // );
+    console.log(image);
+    return this.http.post(
+      'http://localhost:5000/api/v1/offers/uploadPhoto',
+      image
+    );
     return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
   }
 
@@ -71,5 +71,13 @@ export class OffersService {
 
   deleteOffer(id: string) {
     return this.http.delete(`http://localhost:5000/api/v1/offers/${id}`);
+  }
+
+  editOffer(offer: any, image: any, id: string | null): Observable<any> {
+    // return this.http.post(
+    //   'http://localhost:5000/api/v1/offers/uploadPhoto',
+    //   image
+    // );
+    return this.http.put(`http://localhost:5000/api/v1/offers/${id}`, offer);
   }
 }

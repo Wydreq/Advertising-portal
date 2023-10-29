@@ -16,7 +16,12 @@
     <h3>{{ offer.name }}</h3>
     <div class="buttonContainer">
       <button pButton icon="pi pi-eye" (click)="showOffer(offer.id)"></button>
-      <button pButton icon="pi pi-pencil" class="p-button-warning"></button>
+      <button
+        pButton
+        icon="pi pi-pencil"
+        class="p-button-warning"
+        (click)="editOffer(offer.id)"
+      ></button>
       <button
         pButton
         icon="pi pi-trash"

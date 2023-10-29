@@ -41,6 +41,10 @@ export class MyOffersComponent implements OnInit {
     this.router.navigate(['/offers', id]);
   }
 
+  editOffer(id: string) {
+    this.router.navigate(['my-offers/edit', id]);
+  }
+
   deleteOffer(id: string) {
     if (confirm('Are you sure to delete this offer?')) {
       this.offersService.deleteOffer(id).subscribe((resData) => {

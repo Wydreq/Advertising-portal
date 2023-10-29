@@ -1,0 +1,81 @@
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+<div class="fullCont" *ngIf="!isLoading">
+  <h1>Edit existing offer</h1>
+  <form [formGroup]="newOfferForm" (ngSubmit)="onSubmitForm()">
+    <p-messages
+      [(value)]="messages"
+      [enableService]="false"
+      [closable]="true"
+    ></p-messages>
+    <div class="nameCatCont">
+      <div class="p-inputgroup">
+        <input
+          type="text"
+          pInputText
+          placeholder="Offer name"
+          formControlName="name"
+        />
+        <span class="p-inputgroup-addon">12/50</span>
+      </div>
+      <p-dropdown
+        [options]="categories"
+        optionLabel="name"
+        formControlName="category"
+      ></p-dropdown>
+    </div>
+    <div class="p-inputgroup">
+      <textarea
+        pInputText
+        placeholder="Description"
+        formControlName="description"
+      ></textarea>
+      <span class="p-inputgroup-addon">12/50</span>
+    </div>
+    <div class="priceCont">
+      <div class="p-inputgroup">
+        <input
+          type="number"
+          class="priceInput"
+          pInputText
+          placeholder="Price"
+          formControlName="price"
+        />
+        <span class="p-inputgroup-addon">$</span>
+      </div>
+      <span>Do you want to negotiate price?</span>
+      <p-inputSwitch formControlName="negotiate"></p-inputSwitch>
+    </div>
+    <div class="p-inputgroup">
+      <input
+        type="number"
+        pInputText
+        placeholder="Phone number"
+        formControlName="phone"
+      />
+      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-phone"></i></span>
+    </div>
+    <div class="p-inputgroup">
+      <input
+        type="text"
+        pInputText
+        placeholder="Address"
+        formControlName="address"
+      />
+      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-home"></i></span>
+    </div>
+    <div class="p-inputgroup">
+      <input
+        (change)="onFileSelect($event)"
+        type="file"
+        pInputText
+        accept="image/png, image/jpeg"
+      />
+      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-file"></i></span>
+    </div>
+    <p-button
+      label="Submit"
+      type="submit"
+      [disabled]="!newOfferForm.valid"
+    ></p-button>
+  </form>
+</div>

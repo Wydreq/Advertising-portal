@@ -33,6 +33,7 @@ import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ImageModule } from 'primeng/image';
 import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
+import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +52,7 @@ import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.c
     MyOffersComponent,
     NewOfferComponent,
     OfferDetailsComponent,
+    EditOfferComponent,
   ],
   imports: [
     BrowserModule,
