@@ -26,7 +26,7 @@ export class NewOfferComponent implements OnInit {
   isLoading: boolean = false;
   messages: Message[] = [];
   photoUrl: string = '';
-  selectedFile?: ImageSnippet;
+  selectedFile!: File;
 
   constructor(
     private offersService: OffersService,
@@ -76,24 +76,16 @@ export class NewOfferComponent implements OnInit {
     });
   }
 
-  onFileSelect(imageInput: any) {
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener('load', (event: any) => {
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      this.offersService.uploadPhoto(this.selectedFile.file).subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    });
-
-    reader.readAsDataURL(file);
+  onFileSelect(event: any) {
+    this.selectedFile = event.target.files[0];
+    this.offersService.uploadPhoto(this.selectedFile)!.subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   onSubmitForm() {
@@ -105,14 +97,12 @@ export class NewOfferComponent implements OnInit {
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
+      image: this.newOfferForm.value.image,
     };
-
-    const formData = new FormData();
-    formData.append('image', this.newOfferForm.value.image);
 
     let offerObs: Observable<{}>;
     this.isLoading = true;
-    offerObs = this.offersService.createNewOffer(sendingForm, formData);
+    offerObs = this.offersService.createNewOffer(sendingForm);
     offerObs.subscribe(
       (resData) => {
         this.isLoading = false;

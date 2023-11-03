@@ -48,16 +48,16 @@ export class OffersService {
     return this.http.get<OfferRes>(`http://localhost:5000/api/v1/offers/${id}`);
   }
 
-  createNewOffer(offer: any, image: any): Observable<any> {
+  createNewOffer(offer: any): Observable<any> {
     return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
   }
 
-  uploadPhoto(photo: any) {
+  uploadPhoto(photo: File) {
     const formData: FormData = new FormData();
-
     formData.append('image', photo);
+
     return this.http.post(
-      `http://localhost:5000/api/v1/offers/upload/photo`,
+      'http://localhost:5000/api/v1/offers/upload/photo',
       formData
     );
   }

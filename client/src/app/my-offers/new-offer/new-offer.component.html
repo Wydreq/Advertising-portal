@@ -67,10 +67,9 @@
     <div class="p-inputgroup">
       <input
         #imageInput
-        (change)="onFileSelect(imageInput)"
+        (change)="onFileSelect($event)"
         type="file"
         pInputText
-        accept="image/*"
       />
       <span class="p-inputgroup-addon"><i class="pi pi-fw pi-file"></i></span>
     </div>
