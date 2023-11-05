@@ -1,0 +1,6 @@
+<div *ngIf="apiLoaded">
+  <google-map [options]="options" width="300px" height="300px">
+    <map-circle [center]="circle" [radius]="radius"></map-circle
+  ></google-map>
+</div>
+<span *ngIf="!apiLoaded">NOT LOADED</span>

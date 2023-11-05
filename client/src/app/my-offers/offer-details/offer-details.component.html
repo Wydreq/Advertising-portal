@@ -1,23 +1,57 @@
 <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
-<div class="fullContainer">
-  <p-messages
-    [(value)]="messages"
-    [enableService]="false"
-    [closable]="true"
-  ></p-messages>
-  <div class="offerContainer" *ngIf="offer">
-    <div class="imageTitle">
-      <p-image
-        src="../../../assets/no-photo.jpg"
-        alt="offer image"
-        width="150px"
-        class="image"
-      ></p-image>
-      <span class="title">{{ offer.name }}</span>
+<p-messages
+  [(value)]="messages"
+  [enableService]="false"
+  [closable]="true"
+></p-messages>
+<div class="fullContainer" *ngIf="offer">
+  <div class="columnOne">
+    <div class="imageContainer">
+      <img src="../../../assets/no-photo.jpg" alt="noimg" />
     </div>
-    <div class="descriptionCont">
-      <h3>Offer description</h3>
-      <span>{{ offer.description }}</span>
+    <div class="descriptionContainer">
+      <div class="desc">
+        <span class="price">Description</span>
+        <span class="descriptionContent">{{ offer.description }}</span>
+      </div>
+      <div class="statistics">
+        <span class="added">ID: {{ offer.id }}</span>
+        <span class="added">Views: {{ offer.offerViews }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="columnTwo">
+    <div class="titleContact">
+      <span class="added">Created: {{ offer.createdAt | date }}</span>
+      <span class="title">{{ offer.name | titlecase }}</span>
+      <div class="priceCont">
+        <span class="price">{{ offer.price }}$</span>
+        <span class="negotiate" *ngIf="offer.negotiate">Negotiable</span>
+      </div>
+      <div class="btnContainer">
+        <button pButton class="p-button-help">Buy</button>
+        <button pButton class="p-button-outlined">Negotiate</button>
+      </div>
+    </div>
+    <div class="sellerInfo">
+      <span class="price">Seller</span>
+      <span class="title">{{ seller.name }}</span>
+      <span class="added">On portal since {{ seller.createdAt | date }}</span>
+      <button
+        pButton
+        *ngIf="!isNumberShowed"
+        class="p-button-help"
+        (click)="showOfferNumber()"
+      >
+        Show contact number
+      </button>
+      <button pButton *ngIf="isNumberShowed" class="p-button-outlined">
+        {{ offer.phone }}
+      </button>
+    </div>
+    <div class="locationContainer">
+      <span class="price" style="margin-right: auto">Location</span>
+      <app-google-map [coords]="offer.location.coordinates"></app-google-map>
     </div>
   </div>
 </div>

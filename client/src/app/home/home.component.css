@@ -3,6 +3,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-family: "Montserrat", sans-serif;
 }
 
 .searchbarContainer {
@@ -28,33 +29,34 @@
   flex-wrap: wrap;
   gap: 20px;
   margin-top: 30px;
+  cursor: pointer;
 }
 
 .cardContainer {
-  width: 400px;
-  height: 200px;
+  width: 80vw;
+  min-height: 150px;
   padding: 10px;
-  background-color: whitesmoke;
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 15px;
+  background-color: white;
+  /* border: 1px solid rgb(219, 219, 219); */
+  box-shadow: 0px 4px 8px 0px rgba(32, 32, 32, 0.08);
+  border-radius: 2px;
   display: flex;
-  align-items: center;
 }
 
 .imageCont {
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 15px;
   overflow: hidden;
+  width: 250px;
+  height: 150px;
+  object-fit: cover;
 }
 
 .infoContainer {
   display: flex;
-  /* align-items: center; */
-  justify-content: space-evenly;
   flex-direction: column;
-  margin-left: 20px;
-  height: 200px;
-  width: 50%;
+  height: 150px;
+  width: 100%;
+  align-items: space-between;
+  margin-left: 10px;
 }
 
 .offerName {
@@ -64,9 +66,26 @@
 
 .offerPrice {
   font-size: 20px;
-  font-weight: bold;
 }
 
-.detailsBtn {
-  margin-left: auto;
+.fRow {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priceCont {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.negotiate {
+  font-size: 13px;
+  color: #666666;
+}
+
+.location {
+  margin-top: auto;
 }

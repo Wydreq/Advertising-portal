@@ -5,6 +5,7 @@
   [closable]="true"
 ></p-messages>
 <div class="fullCont">
+  <h1>My offers</h1>
   <h1 *ngIf="offersLength === 0 && !isLoading">No offers found</h1>
   <div class="offerCard" *ngFor="let offer of userOffers">
     <p-image

@@ -29,6 +29,18 @@ export class OffersService {
       );
   }
 
+  addOfferView(id: string | null) {
+    return this.http
+      .put(`http://localhost:5000/api/v1/offers/${id}/addOfferView`, {})
+      .subscribe();
+  }
+
+  addPhoneNumberView(id: string | null) {
+    return this.http
+      .put(`http://localhost:5000/api/v1/offers/${id}/addPhoneNumberView`, {})
+      .subscribe();
+  }
+
   getSpecificUserOffers() {
     this.isLoading.next(true);
     return this.http
@@ -48,18 +60,26 @@ export class OffersService {
     return this.http.get<OfferRes>(`http://localhost:5000/api/v1/offers/${id}`);
   }
 
-  createNewOffer(offer: any, image: any): Observable<any> {
+  createNewOffer(offer: any, formData: FormData): Observable<any> {
     return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
-  }
+    // for (const entry of (formData as any).entries()) {
+    //   console.log(entry[0], entry[1]);
+    // Or display in the DOM, for example:
+    // document.getElementById('output').innerHTML += `${entry[0]}: ${entry[1]}<br>`;
+    // }
+    //return this.http.get('');
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'multipart/form-data',
+    //   Accept: 'application/json',
+    // });
 
-  uploadPhoto(photo: any) {
-    const formData: FormData = new FormData();
-
-    formData.append('image', photo);
-    return this.http.post(
-      `http://localhost:5000/api/v1/offers/upload/photo`,
-      formData
-    );
+    // return this.http.post(
+    //   `http://localhost:5000/api/v1/offers/upload/photo`,
+    //   formData,
+    //   {
+    //     headers: headers,
+    //   }
+    // );
   }
 
   deleteOffer(id: string) {

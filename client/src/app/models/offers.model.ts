@@ -23,7 +23,9 @@ export class OfferItem {
     public slug: string,
     public __v: number,
     public id: string,
-    public address: string
+    public address: string,
+    public offerViews: number,
+    public numberViews: number
   ) {}
 }
 

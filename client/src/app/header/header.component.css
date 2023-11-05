@@ -5,25 +5,16 @@
   justify-content: center;
   gap: 20px;
   z-index: 100;
-}
-
-/* .p-menubar .p-menubar-list {
-  width: 100%;
+  background-color: white;
 }
 
 .p-menubar .p-menubar-list .p-menuitem:last-child {
   color: blue;
   width: 100%;
-  margin-left: auto;
-}
-
-/* .gapp {
-  margin-right: auto;
 }
 
 ::ng-deep p-menubarsub {
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin-right: 5vw;
-} */
+}

@@ -32,7 +32,7 @@
         formControlName="description"
       ></textarea>
       <span class="p-inputgroup-addon"
-        >{{ newOfferForm.get("description")?.value?.length }}/500</span
+        >{{ newOfferForm.get("description")?.value?.length }}/1500</span
       >
     </div>
     <div class="priceCont">
@@ -59,18 +59,22 @@
       <span class="p-inputgroup-addon"><i class="pi pi-fw pi-phone"></i></span>
     </div>
     <div class="p-inputgroup">
-      <app-auto-complete
-        (onSetAddress)="setAddress($event)"
-      ></app-auto-complete>
-      <span class="p-inputgroup-addon"><i class="pi pi-fw pi-home"></i></span>
+      <input
+        type="text"
+        pInputText
+        placeholder="Address"
+        formControlName="address"
+      />
+      <span class="p-inputgroup-addon"> <i class="pi pi-fw pi-home"></i></span>
     </div>
     <div class="p-inputgroup">
       <input
         #imageInput
-        (change)="onFileSelect(imageInput)"
+        (change)="onFileSelect($event)"
         type="file"
         pInputText
         accept="image/*"
+        name="image"
       />
       <span class="p-inputgroup-addon"><i class="pi pi-fw pi-file"></i></span>
     </div>

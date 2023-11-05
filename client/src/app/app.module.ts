@@ -7,7 +7,11 @@ import { AuthComponent } from './auth/auth.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ModalComponent } from './shared/modal/modal.component';
 import { RegisterModalComponent } from './auth/register-modal/register-modal.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientJsonpModule,
+  HttpClientModule,
+} from '@angular/common/http';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
 import { HomeComponent } from './home/home.component';
@@ -34,7 +38,10 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ImageModule } from 'primeng/image';
 import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
 import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
-import { AutoCompleteComponent } from './shared/auto-complete/auto-complete.component';
+import { CommonModule } from '@angular/common';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { GoogleMapComponent } from './shared/google-map/google-map.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +61,7 @@ import { AutoCompleteComponent } from './shared/auto-complete/auto-complete.comp
     NewOfferComponent,
     OfferDetailsComponent,
     EditOfferComponent,
-    AutoCompleteComponent,
+    GoogleMapComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +82,10 @@ import { AutoCompleteComponent } from './shared/auto-complete/auto-complete.comp
     MenuModule,
     InputSwitchModule,
     ImageModule,
+    CommonModule,
+    GoogleMapsModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
   ],
   providers: [
     {

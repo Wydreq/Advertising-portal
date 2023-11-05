@@ -20,21 +20,23 @@
   </div>
   <div class="offersContainer">
     <p class="not-found" *ngIf="!isLoading && !loadedOffers">No offers found</p>
-    <div *ngFor="let offer of loadedOffers" class="cardContainer">
-      <p-image
-        src="../../assets/no-photo.jpg"
-        alt="no-photo"
-        width="150px"
-        class="imageCont"
-      ></p-image>
+    <div
+      *ngFor="let offer of loadedOffers"
+      class="cardContainer"
+      [routerLink]="['/offers', offer.id]"
+    >
+      <img src="../../assets/no-photo.jpg" alt="no-photo" class="imageCont" />
       <div class="infoContainer">
-        <span class="offerName">{{ offer.name }}</span>
-        <span class="offerPrice">{{ offer.price }}$</span>
-        <p-button
-          type="button"
-          class="detailsBtn"
-          [routerLink]="['/offers', offer.id]"
-          >Details</p-button
+        <div class="fRow">
+          <span class="offerName">{{ offer.name | titlecase }}</span>
+          <div class="priceCont">
+            <span class="offerPrice">{{ offer.price }}$</span>
+            <span class="negotiate" *ngIf="offer.negotiate">Negotiable</span>
+          </div>
+        </div>
+        <span class="location"
+          >{{ offer.location.city | titlecase }},
+          {{ offer.location.country | titlecase }}</span
         >
       </div>
     </div>

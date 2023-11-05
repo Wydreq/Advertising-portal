@@ -10,13 +10,12 @@ dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
+const app = express();
+app.use(express.json());
+
 const auth = require('./routes/auth');
 const offers = require('./routes/offers');
 const admin = require('./routes/admin');
-
-const app = express();
-
-app.use(express.json());
 
 app.use(
   cors({

@@ -26,7 +26,8 @@ export class NewOfferComponent implements OnInit {
   isLoading: boolean = false;
   messages: Message[] = [];
   photoUrl: string = '';
-  selectedFile?: ImageSnippet;
+
+  image: any;
 
   constructor(
     private offersService: OffersService,
@@ -54,7 +55,7 @@ export class NewOfferComponent implements OnInit {
       category: new FormControl('Electronics', Validators.required),
       description: new FormControl(null, [
         Validators.required,
-        Validators.maxLength(500),
+        Validators.maxLength(1500),
       ]),
       price: new FormControl(null, [
         Validators.required,
@@ -70,30 +71,11 @@ export class NewOfferComponent implements OnInit {
     });
   }
 
-  setAddress(address: string) {
-    this.newOfferForm.patchValue({
-      address: address,
-    });
-  }
-
-  onFileSelect(imageInput: any) {
-    const file: File = imageInput.files[0];
-    const reader = new FileReader();
-
-    reader.addEventListener('load', (event: any) => {
-      this.selectedFile = new ImageSnippet(event.target.result, file);
-
-      this.offersService.uploadPhoto(this.selectedFile.file).subscribe(
-        (res) => {
-          console.log(res);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
-    });
-
-    reader.readAsDataURL(file);
+  onFileSelect(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.image = file;
+    }
   }
 
   onSubmitForm() {
@@ -108,13 +90,13 @@ export class NewOfferComponent implements OnInit {
     };
 
     const formData = new FormData();
-    formData.append('image', this.newOfferForm.value.image);
+    formData.append('image', this.image);
 
     let offerObs: Observable<{}>;
     this.isLoading = true;
     offerObs = this.offersService.createNewOffer(sendingForm, formData);
     offerObs.subscribe(
-      (resData) => {
+      () => {
         this.isLoading = false;
         this.messagesService.setMessage(
           'success',
@@ -123,7 +105,7 @@ export class NewOfferComponent implements OnInit {
         );
         this.router.navigate(['/my-offers']);
       },
-      (error) => {
+      () => {
         this.isLoading = false;
         this.messagesService.setMessage(
           'error',

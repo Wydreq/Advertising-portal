@@ -14,7 +14,10 @@ const OfferSchema = new mongoose.Schema(
     description: {
       type: String,
       required: [true, 'Please insert offer description'],
-      maxlength: [500, 'Offer description can not be more than 500 characters'],
+      maxlength: [
+        1500,
+        'Offer description can not be more than 1500 characters',
+      ],
     },
     phone: {
       type: String,
@@ -53,6 +56,14 @@ const OfferSchema = new mongoose.Schema(
     photo: {
       type: String,
       default: 'no-photo.jpg',
+    },
+    offerViews: {
+      type: Number,
+      default: 0,
+    },
+    numberViews: {
+      type: Number,
+      default: 0,
     },
     negotiate: {
       type: Boolean,

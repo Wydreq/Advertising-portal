@@ -1,4 +1,5 @@
 const Offer = require('../models/Offer');
+const User = require('../models/User');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const cloudinary = require('../utils/cloudinary');
@@ -27,6 +28,50 @@ exports.getUserOffers = asyncHandler(async (req, res, next) => {
 // @access      Private
 exports.getOffer = asyncHandler(async (req, res, next) => {
   const offer = await Offer.findById(req.params.id);
+  const user = await User.findById(offer.user);
+  console.log(user);
+  res.status(200).json({
+    success: true,
+    data: offer,
+    user: {
+      name: user.firstName,
+      createdAt: user.createdAt,
+    },
+  });
+});
+
+// @desc        Add a offer view
+// @route       PUT /api/v1/offers/:id/addOfferView
+// @access      Private
+exports.addOfferView = asyncHandler(async (req, res, next) => {
+  const offer = await Offer.findById(req.params.id);
+
+  if (!offer) {
+    return res.status(404).json({ success: false, message: 'Offer not found' });
+  }
+
+  offer.offerViews += 1;
+  await offer.save();
+
+  res.status(200).json({
+    success: true,
+    data: offer,
+  });
+});
+
+// @desc        Add a phone number view
+// @route       PUT /api/v1/offers/:id/addPhoneNumberView
+// @access      Private
+exports.addPhoneNumberView = asyncHandler(async (req, res, next) => {
+  const offer = await Offer.findById(req.params.id);
+
+  if (!offer) {
+    return res.status(404).json({ success: false, message: 'Offer not found' });
+  }
+
+  offer.numberViews += 1;
+  await offer.save();
+
   res.status(200).json({
     success: true,
     data: offer,
@@ -37,7 +82,10 @@ exports.getOffer = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/offers/photo/upload
 // @access  Private
 exports.uploadOfferPhoto = asyncHandler(async (req, res, next) => {
-  cloudinary.uploader.upload(req.file.path, function (err, result) {
+  console.log('-----FILE-----');
+  console.log(req.file);
+  console.log('--------------');
+  /*cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
       console.log('essa');
       return res.status(500).json({
@@ -50,7 +98,7 @@ exports.uploadOfferPhoto = asyncHandler(async (req, res, next) => {
       message: 'Uploaded!',
       data: result,
     });
-  });
+  });*/
 });
 
 // @desc    Create offer

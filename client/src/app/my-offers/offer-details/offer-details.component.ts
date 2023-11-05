@@ -8,6 +8,10 @@ import { OffersService } from 'src/app/services/offers.service';
 export interface OfferRes {
   success: boolean;
   data: OfferItem;
+  user: {
+    name: string;
+    createdAt: Date;
+  };
 }
 
 @Component({
@@ -19,6 +23,8 @@ export class OfferDetailsComponent implements OnInit {
   offer!: OfferItem;
   isLoading: boolean = true;
   messages: Message[] = [];
+  isNumberShowed: boolean = false;
+  seller: any;
 
   constructor(
     private offersService: OffersService,
@@ -33,6 +39,7 @@ export class OfferDetailsComponent implements OnInit {
     this.offersService.getSingleOffer(id).subscribe(
       (resData) => {
         this.offer = resData.data;
+        this.seller = resData.user;
         this.isLoading = false;
       },
       (err) => {
@@ -44,5 +51,12 @@ export class OfferDetailsComponent implements OnInit {
         this.isLoading = false;
       }
     );
+    this.offersService.addOfferView(id);
+  }
+
+  showOfferNumber() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.isNumberShowed = true;
+    this.offersService.addPhoneNumberView(id);
   }
 }
