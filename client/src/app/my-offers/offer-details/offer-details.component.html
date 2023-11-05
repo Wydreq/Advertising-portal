@@ -30,7 +30,9 @@
       </div>
       <div class="btnContainer">
         <button pButton class="p-button-help">Buy</button>
-        <button pButton class="p-button-outlined">Negotiate</button>
+        <button pButton class="p-button-outlined" *ngIf="offer.negotiate">
+          Negotiate
+        </button>
       </div>
     </div>
     <div class="sellerInfo">
