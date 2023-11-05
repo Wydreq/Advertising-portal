@@ -87,6 +87,7 @@ export class NewOfferComponent implements OnInit {
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
+      image: this.newOfferForm.value.image,
     };
 
     const formData = new FormData();
@@ -94,7 +95,7 @@ export class NewOfferComponent implements OnInit {
 
     let offerObs: Observable<{}>;
     this.isLoading = true;
-    offerObs = this.offersService.createNewOffer(sendingForm, formData);
+    offerObs = this.offersService.createNewOffer(sendingForm);
     offerObs.subscribe(
       () => {
         this.isLoading = false;
