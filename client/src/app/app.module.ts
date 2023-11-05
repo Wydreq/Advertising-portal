@@ -41,6 +41,7 @@ import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component'
 import { CommonModule } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GoogleMapComponent } from './shared/google-map/google-map.component';
+import { SearchBarComponent } from './shared/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { GoogleMapComponent } from './shared/google-map/google-map.component';
     OfferDetailsComponent,
     EditOfferComponent,
     GoogleMapComponent,
+    SearchBarComponent,
   ],
   imports: [
     BrowserModule,

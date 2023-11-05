@@ -29,6 +29,28 @@ export class OffersService {
       );
   }
 
+  getFilteredOffers(options: any) {
+    let url = '';
+    console.log(options);
+
+    if (options.content !== '') {
+      url = `http://localhost:5000/api/v1/offers?name=${options.content}&category=${options.category.name}`;
+    } else {
+      url = `http://localhost:5000/api/v1/offers?category=${options.category.name}`;
+    }
+
+    this.isLoading.next(true);
+    return this.http.get<OffersRes>(url).subscribe(
+      (resData) => {
+        this.offers.next(resData);
+        this.isLoading.next(false);
+      },
+      (err) => {
+        this.isLoading.next(false);
+      }
+    );
+  }
+
   addOfferView(id: string | null) {
     return this.http
       .put(`http://localhost:5000/api/v1/offers/${id}/addOfferView`, {})

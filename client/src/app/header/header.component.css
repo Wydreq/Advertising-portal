@@ -8,13 +8,8 @@
   background-color: white;
 }
 
-.p-menubar .p-menubar-list .p-menuitem:last-child {
-  color: blue;
-  width: 100%;
-}
-
 ::ng-deep p-menubarsub {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }

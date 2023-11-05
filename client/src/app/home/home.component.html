@@ -5,19 +5,7 @@
     [enableService]="false"
     [closable]="true"
   ></p-messages>
-  <div class="searchbarContainer">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input type="text" pInputText placeholder="Search" />
-    </span>
-    <button
-      pButton
-      pRipple
-      type="button"
-      icon="pi pi-search"
-      class="p-button-rounded p-button-success"
-    ></button>
-  </div>
+  <app-search-bar (onSearch)="customSearchHandler($event)"></app-search-bar>
   <div class="offersContainer">
     <p class="not-found" *ngIf="!isLoading && !loadedOffers">No offers found</p>
     <div

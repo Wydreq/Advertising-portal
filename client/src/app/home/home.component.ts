@@ -34,4 +34,8 @@ export class HomeComponent implements OnInit {
       this.offersService.getAllOffers();
     }
   }
+
+  customSearchHandler(options: Object) {
+    this.offersService.getFilteredOffers(options);
+  }
 }

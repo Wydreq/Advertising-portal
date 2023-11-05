@@ -34,3 +34,17 @@
   margin-left: auto;
   gap: 10px;
 }
+
+.endContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.viewsCont {
+  display: flex;
+  gap: 20px;
+}

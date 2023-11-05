@@ -81,7 +81,7 @@ export class NewOfferComponent implements OnInit {
   onSubmitForm() {
     const sendingForm = {
       name: this.newOfferForm.value.name,
-      category: this.newOfferForm.value.category.name,
+      category: this.newOfferForm.value.category,
       description: this.newOfferForm.value.description,
       price: this.newOfferForm.value.price,
       negotiate: this.newOfferForm.value.negotiate,

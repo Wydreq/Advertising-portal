@@ -1,0 +1,24 @@
+<div class="searchbarContainer">
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+    <input
+      type="text"
+      pInputText
+      placeholder="Search"
+      [(ngModel)]="searchContent"
+    />
+  </span>
+  <p-dropdown
+    [options]="categories"
+    optionLabel="name"
+    [(ngModel)]="category"
+  ></p-dropdown>
+  <button
+    pButton
+    pRipple
+    type="button"
+    icon="pi pi-search"
+    class="p-button-rounded p-button-success"
+    (click)="searchHandler()"
+  ></button>
+</div>

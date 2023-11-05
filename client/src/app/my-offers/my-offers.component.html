@@ -15,20 +15,26 @@
       class="image"
     ></p-image>
     <h3>{{ offer.name }}</h3>
-    <div class="buttonContainer">
-      <button pButton icon="pi pi-eye" (click)="showOffer(offer.id)"></button>
-      <button
-        pButton
-        icon="pi pi-pencil"
-        class="p-button-warning"
-        (click)="editOffer(offer.id)"
-      ></button>
-      <button
-        pButton
-        icon="pi pi-trash"
-        class="p-button-danger"
-        (click)="deleteOffer(offer.id)"
-      ></button>
+    <div class="endContainer">
+      <div class="buttonContainer">
+        <button pButton icon="pi pi-eye" (click)="showOffer(offer.id)"></button>
+        <button
+          pButton
+          icon="pi pi-pencil"
+          class="p-button-warning"
+          (click)="editOffer(offer.id)"
+        ></button>
+        <button
+          pButton
+          icon="pi pi-trash"
+          class="p-button-danger"
+          (click)="deleteOffer(offer.id)"
+        ></button>
+      </div>
+      <span class="viewsCont">
+        <span><i class="pi pi-fw pi-eye"></i>{{ offer.offerViews }}</span>
+        <span><i class="pi pi-fw pi-phone"></i>{{ offer.numberViews }}</span>
+      </span>
     </div>
   </div>
 </div>
