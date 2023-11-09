@@ -82,8 +82,8 @@ export class OffersService {
     return this.http.get<OfferRes>(`http://localhost:5000/api/v1/offers/${id}`);
   }
 
-  createNewOffer(offer: any): Observable<any> {
-    return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
+  createNewOffer(offer: any, formData: any): Observable<any> {
+    // return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
     // for (const entry of (formData as any).entries()) {
     //   console.log(entry[0], entry[1]);
     // Or display in the DOM, for example:
@@ -95,13 +95,10 @@ export class OffersService {
     //   Accept: 'application/json',
     // });
 
-    // return this.http.post(
-    //   `http://localhost:5000/api/v1/offers/upload/photo`,
-    //   formData,
-    //   {
-    //     headers: headers,
-    //   }
-    // );
+    return this.http.post(
+      `http://localhost:5000/api/v1/offers/upload/photo`,
+      formData
+    );
   }
 
   deleteOffer(id: string) {

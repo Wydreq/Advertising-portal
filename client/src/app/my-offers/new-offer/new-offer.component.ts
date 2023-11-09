@@ -92,11 +92,10 @@ export class NewOfferComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('image', this.image);
+    console.log(this.image);
 
-    let offerObs: Observable<{}>;
     this.isLoading = true;
-    offerObs = this.offersService.createNewOffer(sendingForm);
-    offerObs.subscribe(
+    this.offersService.createNewOffer(sendingForm, formData).subscribe(
       () => {
         this.isLoading = false;
         this.messagesService.setMessage(
