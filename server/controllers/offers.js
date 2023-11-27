@@ -1,5 +1,6 @@
 const Offer = require('../models/Offer');
 const User = require('../models/User');
+const Purchase = require('../models/Purchase');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const cloudinary = require('../utils/cloudinary');
@@ -160,4 +161,37 @@ exports.editOffer = asyncHandler(async (req, res, next) => {
     success: true,
     data: offer,
   });
+});
+
+// @desc        Buy offer
+// @route       POST /api/v1/offers/:offerId/buy
+// @access      Private
+exports.buyOffer = asyncHandler(async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const offerId = req.params.offerId;
+    const { totalPrice, deliveryAddressId } = req.body;
+
+    // Validate input (you may want to add more validation)
+    if (!userId || !offerId || !totalPrice) {
+      return res
+        .status(400)
+        .json({ error: 'Please provide all required fields.' });
+    }
+
+    // Create a new purchase
+    const newPurchase = await Purchase.create({
+      user: userId,
+      offer: offerId,
+      deliveryAddress: deliveryAddressId,
+      totalPrice,
+    });
+
+    await Offer.findByIdAndUpdate(offerId, { status: 'purchased' });
+
+    res.status(201).json({ success: true, data: newPurchase });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });

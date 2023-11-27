@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { OffersRes } from '../shared/models/offers.model';
 import { OfferRes } from '../my-offers/offer-details/offer-details.component';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,17 @@ export class OffersService {
   getAllOffers() {
     return this.http
       .get<OffersRes>('http://localhost:5000/api/v1/offers')
+      .subscribe(
+        (resData) => {
+          this.offers.next(resData);
+        },
+        (err) => {}
+      );
+  }
+
+  getActiveOffers() {
+    return this.http
+      .get<OffersRes>('http://localhost:5000/api/v1/offers?status=new')
       .subscribe(
         (resData) => {
           this.offers.next(resData);
@@ -90,10 +101,6 @@ export class OffersService {
   }
 
   editOffer(offer: any, image: any, id: string | null): Observable<any> {
-    // return this.http.post(
-    //   'http://localhost:5000/api/v1/offers/uploadPhoto',
-    //   image
-    // );
     return this.http.put(`http://localhost:5000/api/v1/offers/${id}`, offer);
   }
 }

@@ -122,26 +122,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  addCredits() {
-    this.http
-      .post('http://localhost:5000/create-checkout-session', {
-        priceId: 'price_1OGPlVHfbIkTfMVjr31sEdaJ',
-      })
-      .subscribe((session: any) => {
-        this.redirectToCheckout(session.sessionId);
-      });
-  }
-
-  redirectToCheckout(sessionId: string) {
-    const stripe = Stripe(
-      'pk_test_51OGPG4HfbIkTfMVj8vFmEDF06RqIq29mPTPt3USO9PKMqYmoDIcWk39Uwnbt19qSFFUNpkOthRZ5mA4rcwoWGhOv006omcnJJw'
-    );
-
-    stripe.redirectToCheckout({
-      sessionId: sessionId,
-    });
-  }
-
   ngOnDestroy() {
     if (this.userSub) {
       this.userSub.unsubscribe();

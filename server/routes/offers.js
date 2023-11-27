@@ -10,6 +10,7 @@ const {
   editOffer,
   addOfferView,
   addPhoneNumberView,
+  buyOffer,
 } = require('../controllers/offers');
 const { protect } = require('../middleware/auth');
 const advancedResults = require('../middleware/advancedResults');
@@ -29,6 +30,7 @@ router
 router.route('/:id/addOfferView').put(protect, addOfferView);
 router.route('/:id/addPhoneNumberView').put(protect, addPhoneNumberView);
 router.post('/upload/photo', upload.single('image'), uploadOfferPhoto);
+router.route('/:offerId/buy').post(protect, buyOffer);
 router
   .route('/myOffers/all')
   .get(protect, advancedResults(Offer), getUserOffers);

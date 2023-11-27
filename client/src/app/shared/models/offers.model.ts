@@ -18,6 +18,7 @@ export class OfferItem {
     public category: any[],
     public photo: string,
     public negotiate: boolean,
+    public status: string,
     public user: string,
     public createdAt: Date,
     public slug: string,

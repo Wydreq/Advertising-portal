@@ -4,31 +4,56 @@
   [closable]="true"
 ></p-messages>
 <div class="fullCont">
-  <h1>My offers</h1>
-  <h1 *ngIf="offersLength === 0">No offers found</h1>
-  <div class="offerCard" *ngFor="let offer of userOffers">
-    <img src="{{ offer.photo }}" alt="offer image" class="image" />
-    <h3>{{ offer.name }}</h3>
-    <div class="endContainer">
-      <div class="buttonContainer">
-        <button pButton icon="pi pi-eye" (click)="showOffer(offer.id)"></button>
-        <button
-          pButton
-          icon="pi pi-pencil"
-          class="p-button-warning"
-          (click)="editOffer(offer.id)"
-        ></button>
-        <button
-          pButton
-          icon="pi pi-trash"
-          class="p-button-danger"
-          (click)="deleteOffer(offer.id)"
-        ></button>
+  <h1>My active offers</h1>
+  <ng-container *ngFor="let offer of userOffers">
+    <div class="offerCard" *ngIf="offer.status === 'new'">
+      <img src="{{ offer.photo }}" alt="offer image" class="image" />
+      <h3>{{ offer.name }}</h3>
+      <div class="endContainer">
+        <div class="buttonContainer">
+          <button
+            pButton
+            icon="pi pi-eye"
+            (click)="showOffer(offer.id)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-pencil"
+            class="p-button-warning"
+            (click)="editOffer(offer.id)"
+          ></button>
+          <button
+            pButton
+            icon="pi pi-trash"
+            class="p-button-danger"
+            (click)="deleteOffer(offer.id)"
+          ></button>
+        </div>
+        <span class="viewsCont">
+          <span><i class="pi pi-fw pi-eye"></i>{{ offer.offerViews }}</span>
+          <span><i class="pi pi-fw pi-phone"></i>{{ offer.numberViews }}</span>
+        </span>
       </div>
-      <span class="viewsCont">
-        <span><i class="pi pi-fw pi-eye"></i>{{ offer.offerViews }}</span>
-        <span><i class="pi pi-fw pi-phone"></i>{{ offer.numberViews }}</span>
-      </span>
     </div>
-  </div>
+  </ng-container>
+  <h1>Finished offers</h1>
+  <ng-container *ngFor="let offer of userOffers">
+    <div class="offerCard" *ngIf="offer.status === 'purchased'">
+      <img src="{{ offer.photo }}" alt="offer image" class="image" />
+      <h3>{{ offer.name }}</h3>
+      <div class="endContainer">
+        <div class="buttonContainer">
+          <button
+            pButton
+            icon="pi pi-eye"
+            (click)="showOffer(offer.id)"
+          ></button>
+        </div>
+        <span class="viewsCont">
+          <span><i class="pi pi-fw pi-eye"></i>{{ offer.offerViews }}</span>
+          <span><i class="pi pi-fw pi-phone"></i>{{ offer.numberViews }}</span>
+        </span>
+      </div>
+    </div>
+  </ng-container>
 </div>

@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       this.loadedOffers = offers.data;
     });
     if (this.loadedOffers!.length === 0) {
-      this.offersService.getAllOffers();
+      this.offersService.getActiveOffers();
     }
   }
 
