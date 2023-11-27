@@ -11,7 +11,7 @@ import { Message } from 'primeng/api';
   styleUrls: ['./settings.component.css'],
 })
 export class SettingsComponent implements OnInit {
-  user!: User | null;
+  user!: User;
   isModalShowed = false;
   modalMode = 'address';
   userAddresses!: IAddress[];
@@ -28,11 +28,11 @@ export class SettingsComponent implements OnInit {
     this.settingsService.userAddresses.subscribe((addresses) => {
       this.userAddresses = addresses;
     });
-    this.authService.user.subscribe((user) => {
-      this.user = user;
-    });
     this.messagesService.messages$.subscribe((messages) => {
       this.messages = messages;
+    });
+    this.settingsService.getLoggedUserInfo().subscribe((user: any) => {
+      this.user = user.data;
     });
   }
 

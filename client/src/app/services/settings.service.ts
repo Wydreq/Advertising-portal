@@ -9,20 +9,20 @@ import { MessagesService } from './messages.service';
 })
 export class SettingsService implements OnInit {
   userAddresses = new Subject<IAddress[]>();
-  constructor(
-    private http: HttpClient,
-    private messagesService: MessagesService
-  ) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getUserAddresses();
+  }
+
+  getLoggedUserInfo() {
+    return this.http.get('http://localhost:5000/api/v1/auth/me');
   }
 
   getUserAddresses() {
     this.http
       .get('http://localhost:5000/api/v1/address/get-user-addresses')
       .subscribe((resData: any) => {
-        console.log(resData);
         this.userAddresses.next(resData.data);
       });
   }

@@ -10,8 +10,7 @@
 
 .alert-box {
   position: fixed;
-
-  left: 20vw;
+  left: 15vw;
   width: 70vw;
   padding: 16px;
   z-index: 100;

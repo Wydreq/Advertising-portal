@@ -24,6 +24,8 @@ export class OfferDetailsComponent implements OnInit {
   messages: Message[] = [];
   isNumberShowed: boolean = false;
   seller: any;
+  isModalShowed = false;
+  modalMode = 'buy';
 
   constructor(
     private offersService: OffersService,
@@ -49,6 +51,15 @@ export class OfferDetailsComponent implements OnInit {
       }
     );
     this.offersService.addOfferView(id);
+  }
+
+  openModal(mode: string) {
+    this.modalMode = mode;
+    this.isModalShowed = true;
+  }
+
+  closeModal() {
+    this.isModalShowed = false;
   }
 
   showOfferNumber() {

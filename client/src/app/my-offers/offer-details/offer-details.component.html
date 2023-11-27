@@ -1,3 +1,7 @@
+<app-modal *ngIf="isModalShowed" (close)="closeModal()">
+  <app-buy-modal [offer]="offer"></app-buy-modal>
+</app-modal>
+
 <p-messages
   [(value)]="messages"
   [enableService]="false"
@@ -28,7 +32,9 @@
         <span class="negotiate" *ngIf="offer.negotiate">Negotiable</span>
       </div>
       <div class="btnContainer">
-        <button pButton class="p-button-help">Buy</button>
+        <button pButton class="p-button-help" (click)="openModal('buy')">
+          Buy
+        </button>
         <button pButton class="p-button-outlined" *ngIf="offer.negotiate">
           Negotiate
         </button>

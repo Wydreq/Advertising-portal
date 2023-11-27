@@ -41,7 +41,7 @@ const UserSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user'],
+    enum: ['user', 'admin'],
     default: 'user',
   },
   credits: {
@@ -85,7 +85,7 @@ UserSchema.methods.getChangeEmailToken = function (email) {
   //Set expire
   this.changeEmailTokenExpire = Date.now() + 10 * 60 * 1000;
   this.changeEmailAddress = email;
-  return resetToken;
+  return this.changeEmailToken;
 };
 
 //Generate and hash password token

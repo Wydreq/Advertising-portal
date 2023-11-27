@@ -37,7 +37,7 @@ export class ResetEmailComponent implements OnInit {
     setInterval(() => {
       this.counter--;
       if (this.counter === 0) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/settings']);
       }
     }, 1000);
   }
