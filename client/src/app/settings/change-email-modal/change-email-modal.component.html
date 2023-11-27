@@ -1,4 +1,9 @@
 <h1>Change your password</h1>
+<p-messages
+  [(value)]="messages"
+  [enableService]="false"
+  [closable]="true"
+></p-messages>
 <form [formGroup]="form" (ngSubmit)="changeEmailHandler()">
   <div class="row">
     <div class="input-group">

@@ -27,6 +27,19 @@ export class SettingsService implements OnInit {
       });
   }
 
+  changeEmailAddress(email: string) {
+    return this.http.post('http://localhost:5000/api/v1/auth/change-email', {
+      email,
+    });
+  }
+
+  resetEmailAddress(token: string) {
+    return this.http.post(
+      `http://localhost:5000/api/v1/auth/reset-email/${token}`,
+      {}
+    );
+  }
+
   addNewAddress(
     street: string,
     houseNumber: string,

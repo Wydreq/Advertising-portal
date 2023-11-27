@@ -47,6 +47,7 @@ import { NewAddressModalComponent } from './settings/new-address-modal/new-addre
 import { ChangeEmailModalComponent } from './settings/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from './settings/change-password-modal/change-password-modal.component';
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
+import { ResetEmailComponent } from './settings/reset-email/reset-email.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
     NewAddressModalComponent,
     ChangeEmailModalComponent,
     ChangePasswordModalComponent,
+    ResetEmailComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,15 @@
+<div class="container" *ngIf="isSuccess === true && !isLoading">
+  <div class="messContainer">
+    <h1>Email changed succesfully!</h1>
+    <i class="pi pi-check" style="font-size: 5rem"></i>
+    <p>Redirecting in: {{ counter }} seconds</p>
+  </div>
+</div>
+
+<div class="container" *ngIf="isSuccess === false && !isLoading">
+  <div class="messContainer">
+    <h1>{{ message }}</h1>
+    <i class="pi pi-times" style="font-size: 5rem"></i>
+    <p>Redirecting in: {{ counter }} seconds</p>
+  </div>
+</div>

@@ -1,8 +1,8 @@
-const User = require('../models/User');
-const asyncHandler = require('../middleware/async');
-const ErrorResponse = require('../utils/errorResponse');
-const sendEmail = require('../utils/sendEmail');
-const crypto = require('crypto');
+const User = require("../models/User");
+const asyncHandler = require("../middleware/async");
+const ErrorResponse = require("../utils/errorResponse");
+const sendEmail = require("../utils/sendEmail");
+const crypto = require("crypto");
 
 // @desc    Register user
 // @route   POST /api/v1/auth/register
@@ -34,29 +34,29 @@ exports.login = asyncHandler(async (req, res, next) => {
 
   //Validate email & password
   if (!email || !password) {
-    return next(new ErrorResponse('Please provide an email and password', 400));
+    return next(new ErrorResponse("Please provide an email and password", 400));
   }
 
   //Check for user
   const user = await User.findOne({ email })
-    .select('+password')
-    .select('+fistName')
-    .select('+lastName')
-    .select('+status');
+    .select("+password")
+    .select("+fistName")
+    .select("+lastName")
+    .select("+status");
 
   if (!user) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
 
-  if (user.status === 'blocked') {
-    return next(new ErrorResponse('Account is blocked', 401));
+  if (user.status === "blocked") {
+    return next(new ErrorResponse("Account is blocked", 401));
   }
 
   //Check if password matches
   const isMatch = await user.matchPassword(password);
 
   if (!isMatch) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
 
   sendTokenResponse(user, 200, res);
@@ -83,24 +83,24 @@ exports.changeEmail = asyncHandler(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   //Create reset url
-  const resetUrl = `http://localhost:4200/settings/changeEmail/${resetToken}`;
+  const resetUrl = `http://localhost:4200/reset-email/${resetToken}`;
 
   const message = `Change email link \n\n ${resetUrl}`;
 
   try {
     await sendEmail({
       email: req.body.email,
-      subject: 'Change email',
+      subject: "Change email",
       message,
     });
-    res.status(200).json({ success: true, data: 'Email send' });
+    res.status(200).json({ success: true, data: "Email send" });
   } catch (err) {
     console.log(err);
     user.changeEmailToken = undefined;
     user.changeEmailTokenExpire = undefined;
 
     await user.save({ validateBeforeSave: false });
-    return next(new ErrorResponse('Email could not be send', 500));
+    return next(new ErrorResponse("Email could not be send", 500));
   }
 });
 
@@ -114,7 +114,7 @@ exports.resetEmail = asyncHandler(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new ErrorResponse('Invalid token', 400));
+    return next(new ErrorResponse("Invalid token", 400));
   }
 
   //Set new passwprd
@@ -134,7 +134,7 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return next(new ErrorResponse('There is no user with that email', 404));
+    return next(new ErrorResponse("There is no user with that email", 404));
   }
 
   const resetToken = user.getResetPasswordToken();
@@ -149,17 +149,17 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   try {
     await sendEmail({
       email: user.email,
-      subject: 'Password reset token',
+      subject: "Password reset token",
       message,
     });
-    res.status(200).json({ success: true, data: 'Email send' });
+    res.status(200).json({ success: true, data: "Email send" });
   } catch (err) {
     console.log(err);
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     await user.save({ validateBeforeSave: false });
-    return next(new ErrorResponse('Email could not be send', 500));
+    return next(new ErrorResponse("Email could not be send", 500));
   }
 
   res.status(200).json({
@@ -176,14 +176,14 @@ exports.changePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   console.log(user);
   if (password !== confirmPassword) {
-    return next(new ErrorResponse('Passwords are not the same!', 400));
+    return next(new ErrorResponse("Passwords are not the same!", 400));
   }
 
   //Check if password matches
   const isMatch = await user.matchPassword(oldPassword);
 
   if (!isMatch) {
-    return next(new ErrorResponse('Invalid credentials', 401));
+    return next(new ErrorResponse("Invalid credentials", 401));
   }
   user.password = req.body.password;
 
@@ -196,13 +196,13 @@ exports.changePassword = asyncHandler(async (req, res, next) => {
 // @access      Private
 exports.resetPassword = asyncHandler(async (req, res, next) => {
   if (req.body.password !== req.body.confirmPassword) {
-    return next(new ErrorResponse('Passwords are not the same!', 400));
+    return next(new ErrorResponse("Passwords are not the same!", 400));
   }
 
   const resetPasswordToken = crypto
-    .createHash('sha256')
+    .createHash("sha256")
     .update(req.params.resettoken)
-    .digest('hex');
+    .digest("hex");
 
   const user = await User.findOne({
     resetPasswordToken,
@@ -210,7 +210,7 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
   });
 
   if (!user) {
-    return next(new ErrorResponse('Invalid token', 400));
+    return next(new ErrorResponse("Invalid token", 400));
   }
 
   //Set new passwprd
@@ -233,12 +233,12 @@ const sendTokenResponse = (user, statusCode, res) => {
   };
   res
     .status(statusCode)
-    .cookie('token', token, options)
+    .cookie("token", token, options)
     .json({ success: true, token, options, user });
 };
 
 //Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
+process.on("unhandledRejection", (err, promise) => {
   console.log(`Error: ${err.message}`.red);
   //Close server & exit process
   server.close(() => process.exit(1));

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Message } from 'primeng/api';
 import { MessagesService } from 'src/app/services/messages.service';
 import { SettingsService } from 'src/app/services/settings.service';
 
@@ -10,6 +11,7 @@ import { SettingsService } from 'src/app/services/settings.service';
 })
 export class ChangePasswordModalComponent {
   form!: FormGroup;
+  messages: Message[] = [];
 
   @Output() close = new EventEmitter<void>();
 
@@ -19,6 +21,9 @@ export class ChangePasswordModalComponent {
   ) {}
 
   ngOnInit(): void {
+    this.messagesService.messages$.subscribe((messages) => {
+      this.messages = messages;
+    });
     this.form = new FormGroup({
       oldPassword: new FormControl(null, [
         Validators.required,
@@ -52,11 +57,8 @@ export class ChangePasswordModalComponent {
           this.close.emit();
         },
         (err) => {
-          this.messagesService.setMessage(
-            'error',
-            'Error',
-            'Something went wrong!'
-          );
+          console.log(err);
+          this.messagesService.setMessage('error', 'Error', err.error.error);
         }
       );
   }
