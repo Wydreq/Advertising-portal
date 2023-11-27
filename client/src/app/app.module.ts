@@ -42,6 +42,11 @@ import { CommonModule } from '@angular/common';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { GoogleMapComponent } from './shared/google-map/google-map.component';
 import { SearchBarComponent } from './shared/search-bar/search-bar.component';
+import { SettingsComponent } from './settings/settings.component';
+import { NewAddressModalComponent } from './settings/new-address-modal/new-address-modal.component';
+import { ChangeEmailModalComponent } from './settings/change-email-modal/change-email-modal.component';
+import { ChangePasswordModalComponent } from './settings/change-password-modal/change-password-modal.component';
+import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -64,6 +69,10 @@ import { SearchBarComponent } from './shared/search-bar/search-bar.component';
     EditOfferComponent,
     GoogleMapComponent,
     SearchBarComponent,
+    SettingsComponent,
+    NewAddressModalComponent,
+    ChangeEmailModalComponent,
+    ChangePasswordModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,6 +102,11 @@ import { SearchBarComponent } from './shared/search-bar/search-bar.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptorService,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
       multi: true,
     },
   ],

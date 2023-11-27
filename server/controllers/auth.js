@@ -74,6 +74,59 @@ exports.getMe = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc        Change user email (email request)
+// @route       POST /api/v1/auth/change-email
+// @access      Private
+exports.changeEmail = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  const resetToken = user.getChangeEmailToken(req.body.email);
+  await user.save({ validateBeforeSave: false });
+
+  //Create reset url
+  const resetUrl = `http://localhost:4200/settings/changeEmail/${resetToken}`;
+
+  const message = `Change email link \n\n ${resetUrl}`;
+
+  try {
+    await sendEmail({
+      email: req.body.email,
+      subject: 'Change email',
+      message,
+    });
+    res.status(200).json({ success: true, data: 'Email send' });
+  } catch (err) {
+    console.log(err);
+    user.changeEmailToken = undefined;
+    user.changeEmailTokenExpire = undefined;
+
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorResponse('Email could not be send', 500));
+  }
+});
+
+// @desc        Reset user email
+// @route       POST /api/v1/auth/reset-email/:token
+// @access      Private
+exports.resetEmail = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({
+    changeEmailToken: req.params.token,
+    changeEmailTokenExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new ErrorResponse('Invalid token', 400));
+  }
+
+  //Set new passwprd
+  user.email = user.changeEmailAddress;
+  user.changeEmailToken = undefined;
+  user.changeEmailTokenExpire = undefined;
+
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+});
+
 // @desc        Forgot password
 // @route       POST /api/v1/auth/forgotpassword
 // @access      Private
@@ -115,6 +168,29 @@ exports.forgotPassword = asyncHandler(async (req, res, next) => {
   });
 });
 
+// @desc        Change password
+// @route       POSY /api/v1/auth/change-password
+// @access      Private
+exports.changePassword = asyncHandler(async (req, res, next) => {
+  const { oldPassword, password, confirmPassword } = req.body;
+  const user = await User.findById(req.user.id);
+  console.log(user);
+  if (password !== confirmPassword) {
+    return next(new ErrorResponse('Passwords are not the same!', 400));
+  }
+
+  //Check if password matches
+  const isMatch = await user.matchPassword(oldPassword);
+
+  if (!isMatch) {
+    return next(new ErrorResponse('Invalid credentials', 401));
+  }
+  user.password = req.body.password;
+
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+});
 // @desc        Reset password
 // @route       PUT /api/v1/auth/resetpassword/:resettoken
 // @access      Private

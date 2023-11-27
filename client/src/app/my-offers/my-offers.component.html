@@ -1,4 +1,3 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <p-messages
   [(value)]="messages"
   [enableService]="false"
@@ -6,14 +5,9 @@
 ></p-messages>
 <div class="fullCont">
   <h1>My offers</h1>
-  <h1 *ngIf="offersLength === 0 && !isLoading">No offers found</h1>
+  <h1 *ngIf="offersLength === 0">No offers found</h1>
   <div class="offerCard" *ngFor="let offer of userOffers">
-    <p-image
-      src="../../../assets/no-photo.jpg"
-      alt="offer image"
-      width="150px"
-      class="image"
-    ></p-image>
+    <img src="{{ offer.photo }}" alt="offer image" class="image" />
     <h3>{{ offer.name }}</h3>
     <div class="endContainer">
       <div class="buttonContainer">

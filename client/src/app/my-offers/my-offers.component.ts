@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OffersService } from '../services/offers.service';
-import { OfferItem } from '../models/offers.model';
+import { OfferItem } from '../shared/models/offers.model';
 import { Router } from '@angular/router';
 import { MessagesService } from '../services/messages.service';
 import { Message } from 'primeng/api';
@@ -12,7 +12,6 @@ import { Message } from 'primeng/api';
 })
 export class MyOffersComponent implements OnInit {
   userOffers!: OfferItem[];
-  isLoading: boolean = false;
   offersLength: number = 0;
   messages: Message[] = [];
 
@@ -30,9 +29,6 @@ export class MyOffersComponent implements OnInit {
       console.log(userOffers);
       this.userOffers = userOffers.data;
       this.offersLength = userOffers.data.length;
-    });
-    this.offersService.isLoading.subscribe((isLoading) => {
-      this.isLoading = isLoading;
     });
     this.offersService.getSpecificUserOffers();
   }

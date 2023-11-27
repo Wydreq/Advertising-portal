@@ -1,0 +1,55 @@
+<h1>Add new address</h1>
+<form [formGroup]="form" (ngSubmit)="addNewAddressHandler()">
+  <div class="row">
+    <div class="input-group">
+      <label for="street">Insert your street</label>
+      <input pInputText type="text" id="street" formControlName="street" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <label for="houseNumber">Insert your house number</label>
+      <input
+        pInputText
+        type="text"
+        id="houseNumber"
+        formControlName="houseNumber"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <label for="city">Insert your city</label>
+      <input pInputText type="text" id="city" formControlName="city" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <label for="country">Insert your country</label>
+      <input pInputText type="text" id="country" formControlName="country" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <label for="postalCode">Insert your postal code</label>
+      <input
+        pInputText
+        type="text"
+        id="postalCode"
+        formControlName="postalCode"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-group">
+      <label for="recieverFullName">Insert reciever full name</label>
+      <input
+        pInputText
+        type="text"
+        id="recieverFullName"
+        formControlName="recieverFullName"
+      />
+    </div>
+  </div>
+  <p-button type="submit" [disabled]="form.invalid">Submit</p-button>
+</form>

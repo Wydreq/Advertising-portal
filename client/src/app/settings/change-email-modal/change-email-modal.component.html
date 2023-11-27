@@ -1,0 +1,10 @@
+<h1>Change your password</h1>
+<form [formGroup]="form" (ngSubmit)="changeEmailHandler()">
+  <div class="row">
+    <div class="input-group">
+      <label for="email">New email</label>
+      <input pInputText type="email" id="email" formControlName="email" />
+    </div>
+  </div>
+  <p-button type="submit" [disabled]="form.invalid">Submit</p-button>
+</form>

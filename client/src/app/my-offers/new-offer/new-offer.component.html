@@ -1,4 +1,3 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div class="fullCont">
   <h1>Create a new offer</h1>
   <form [formGroup]="newOfferForm" (ngSubmit)="onSubmitForm()">
@@ -71,7 +70,6 @@
       <input
         #imageInput
         (change)="onFileSelect($event)"
-        (change)="onFileSelect($event)"
         type="file"
         pInputText
         accept="image/*"
@@ -82,7 +80,7 @@
     <p-button
       label="Submit"
       type="submit"
-      [disabled]="!newOfferForm.valid"
+      [disabled]="!newOfferForm.valid || !image"
     ></p-button>
   </form>
 </div>

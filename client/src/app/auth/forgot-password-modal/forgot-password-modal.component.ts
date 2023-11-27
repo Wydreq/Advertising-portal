@@ -18,7 +18,6 @@ export class ForgotPasswordModalComponent implements OnInit {
 
   @Output() close = new EventEmitter<void>();
   @Output() resetSuccess = new EventEmitter<void>();
-  isLoading: boolean = false;
   messages: Message[] = [];
 
   ngOnInit(): void {
@@ -29,16 +28,13 @@ export class ForgotPasswordModalComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     let authObs: Observable<{}>;
-    this.isLoading = true;
     authObs = this.authService.forgotPassword(form.value.email);
     authObs.subscribe(
       (resData) => {
-        this.isLoading = false;
         this.resetSuccess.emit();
         this.close.emit();
       },
       (error) => {
-        this.isLoading = false;
         this.messagesService.setMessage('error', 'Error', error);
       }
     );

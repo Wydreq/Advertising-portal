@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
-import { User } from '../models/user.model';
+import { IAddress, User } from '../shared/models/user.model';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { FormGroup } from '@angular/forms';
 
 export interface AuthResponseData {
   token: string;
@@ -16,6 +17,8 @@ export interface AuthResponseData {
     firstName: string;
     lastName: string;
     role: string;
+    credits: Number;
+    addresses: IAddress[];
   };
 }
 
@@ -68,7 +71,9 @@ export class AuthService {
             resData.options.expires,
             resData.user.firstName,
             resData.user.lastName,
-            resData.user.role
+            resData.user.role,
+            resData.user.credits,
+            resData.user.addresses
           );
         })
       );
@@ -110,7 +115,9 @@ export class AuthService {
       userData.expiresIn,
       userData.firstName,
       userData.lastName,
-      userData.role
+      userData.role,
+      userData.credits,
+      userData.addresses
     );
   }
 
@@ -131,7 +138,9 @@ export class AuthService {
     expiresIn: string,
     firstName: string,
     lastName: string,
-    role: string
+    role: string,
+    credits: Number,
+    addresses: IAddress[]
   ) {
     const user = new User(
       email,
@@ -140,7 +149,9 @@ export class AuthService {
       expiresIn,
       firstName,
       lastName,
-      role
+      role,
+      credits,
+      addresses
     );
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));

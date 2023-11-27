@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Message } from 'primeng/api';
 import { MessagesService } from 'src/app/services/messages.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OfferItem, OffersRes } from 'src/app/models/offers.model';
+import { OfferItem, OffersRes } from 'src/app/shared/models/offers.model';
 
 interface Category {
   name: string;
@@ -20,7 +20,6 @@ interface Category {
 export class EditOfferComponent {
   newOfferForm!: FormGroup;
   categories: Category[] | undefined;
-  isLoading: boolean = true;
   messages: Message[] = [];
   photoUrl: string = '';
 
@@ -51,7 +50,7 @@ export class EditOfferComponent {
       category: new FormControl(null, Validators.required),
       description: new FormControl(null, [
         Validators.required,
-        Validators.maxLength(500),
+        Validators.maxLength(1500),
       ]),
       price: new FormControl(null, [
         Validators.required,
@@ -66,12 +65,9 @@ export class EditOfferComponent {
     });
 
     let id = this.route.snapshot.paramMap.get('id');
-    this.offersService.isLoading.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
+
     this.offersService.getSingleOffer(id).subscribe((offerRes) => {
       console.log(offerRes);
-      this.isLoading = true;
       this.newOfferForm.patchValue({
         name: offerRes.data.name,
         category: offerRes.data.category,
@@ -81,7 +77,6 @@ export class EditOfferComponent {
         phone: offerRes.data.phone,
         image: offerRes.data.phone,
       });
-      this.isLoading = false;
     });
   }
 
@@ -106,12 +101,10 @@ export class EditOfferComponent {
     formData.append('image', this.newOfferForm.value.image);
 
     let offerObs: Observable<{}>;
-    this.isLoading = true;
     let id = this.route.snapshot.paramMap.get('id');
     offerObs = this.offersService.editOffer(sendingForm, formData, id);
     offerObs.subscribe(
       (resData) => {
-        this.isLoading = false;
         this.messagesService.setMessage(
           'success',
           'Success',
@@ -120,7 +113,6 @@ export class EditOfferComponent {
         this.router.navigate(['/my-offers']);
       },
       (error) => {
-        this.isLoading = false;
         this.messagesService.setMessage(
           'error',
           'Error',

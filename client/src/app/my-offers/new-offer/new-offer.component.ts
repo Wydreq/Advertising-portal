@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Message } from 'primeng/api';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Router } from '@angular/router';
+import { CloudinaryResponse } from 'src/app/shared/models/cloudinaryRes.model';
 
 interface Category {
   name: string;
@@ -23,7 +24,6 @@ class ImageSnippet {
 export class NewOfferComponent implements OnInit {
   newOfferForm!: FormGroup;
   categories: Category[] | undefined;
-  isLoading: boolean = false;
   messages: Message[] = [];
   photoUrl: string = '';
 
@@ -87,26 +87,32 @@ export class NewOfferComponent implements OnInit {
       negotiate: this.newOfferForm.value.negotiate,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
-      image: this.newOfferForm.value.image,
+      photo: this.newOfferForm.value.image,
     };
 
-    const formData = new FormData();
-    formData.append('image', this.image);
-    console.log(this.image);
-
-    this.isLoading = true;
-    this.offersService.createNewOffer(sendingForm, formData).subscribe(
-      () => {
-        this.isLoading = false;
-        this.messagesService.setMessage(
-          'success',
-          'Success',
-          'Offer has been added!'
+    this.offersService.uploadPhoto(this.image).subscribe(
+      (resData: CloudinaryResponse) => {
+        sendingForm.photo = resData.data.secure_url;
+        this.offersService.createNewOffer(sendingForm).subscribe(
+          (resData) => {
+            console.log(resData);
+            this.messagesService.setMessage(
+              'success',
+              'Success',
+              'Offer has been added!'
+            );
+            this.router.navigate(['/my-offers']);
+          },
+          () => {
+            this.messagesService.setMessage(
+              'error',
+              'Error',
+              'Something went wrong!'
+            );
+          }
         );
-        this.router.navigate(['/my-offers']);
       },
       () => {
-        this.isLoading = false;
         this.messagesService.setMessage(
           'error',
           'Error',

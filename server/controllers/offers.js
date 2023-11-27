@@ -82,12 +82,8 @@ exports.addPhoneNumberView = asyncHandler(async (req, res, next) => {
 // @route   POST /api/v1/offers/photo/upload
 // @access  Private
 exports.uploadOfferPhoto = asyncHandler(async (req, res, next) => {
-  console.log('-----FILE-----');
-  console.log(req.file);
-  console.log('--------------');
-  /*cloudinary.uploader.upload(req.file.path, function (err, result) {
+  cloudinary.uploader.upload(req.file.path, function (err, result) {
     if (err) {
-      console.log('essa');
       return res.status(500).json({
         success: false,
         message: err,
@@ -98,7 +94,7 @@ exports.uploadOfferPhoto = asyncHandler(async (req, res, next) => {
       message: 'Uploaded!',
       data: result,
     });
-  });*/
+  });
 });
 
 // @desc    Create offer
@@ -119,7 +115,6 @@ exports.createOffer = asyncHandler(async (req, res, next) => {
 // @access      Private
 exports.deleteOffer = asyncHandler(async (req, res, next) => {
   let offer = await Offer.findById(req.params.id);
-  //Make sure user is bootcamp owner
   if (offer.user.toString() !== req.user.id && req.user.role !== 'admin') {
     return next(
       new ErrorResponse(
@@ -147,7 +142,6 @@ exports.editOffer = asyncHandler(async (req, res, next) => {
       new ErrorResponse(`Offer not found with id of ${req.params.id}`, 404)
     );
   }
-  //Make sure user is bootcamp owner
   if (offer.user.toString() !== req.user.id && req.user.role !== 'admin') {
     return next(
       new ErrorResponse(

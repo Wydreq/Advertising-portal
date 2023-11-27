@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Message, MessageService } from 'primeng/api';
 import { OffersService } from '../services/offers.service';
-import { OfferItem, OffersRes } from '../models/offers.model';
+import { OfferItem, OffersRes } from '../shared/models/offers.model';
 import { MessagesService } from '../services/messages.service';
 
 @Component({
@@ -13,7 +13,6 @@ import { MessagesService } from '../services/messages.service';
 export class HomeComponent implements OnInit {
   loadedOffers: OfferItem[] | null = [];
   messages: Message[] = [];
-  isLoading: boolean = true;
 
   constructor(
     private offersService: OffersService,
@@ -24,9 +23,7 @@ export class HomeComponent implements OnInit {
     this.messagesService.messages$.subscribe((messages) => {
       this.messages = messages;
     });
-    this.offersService.isLoading.subscribe((isLoading) => {
-      this.isLoading = isLoading;
-    });
+
     this.offersService.offers.subscribe((offers) => {
       this.loadedOffers = offers.data;
     });

@@ -18,7 +18,6 @@ export class ForgotPasswordComponent implements OnInit {
     private messagesService: MessagesService
   ) {}
 
-  isLoading: boolean = false;
   messages: Message[] = [];
 
   ngOnInit(): void {
@@ -28,7 +27,6 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.isLoading = true;
     let authObs: Observable<{}>;
     const token = this.route.snapshot.params['token'];
     if (form.value.password !== form.value.confirmpassword) {
@@ -37,7 +35,6 @@ export class ForgotPasswordComponent implements OnInit {
         'Error',
         'Passwords are not the same'
       );
-      this.isLoading = false;
       return;
     }
     authObs = this.authService.resetPassword(
@@ -47,7 +44,6 @@ export class ForgotPasswordComponent implements OnInit {
     );
     authObs.subscribe(
       (resData) => {
-        this.isLoading = false;
         this.messagesService.setMessage(
           'success',
           'Success',
@@ -55,7 +51,6 @@ export class ForgotPasswordComponent implements OnInit {
         );
       },
       (error) => {
-        this.isLoading = false;
         this.messagesService.setMessage('error', 'Error', error);
       }
     );

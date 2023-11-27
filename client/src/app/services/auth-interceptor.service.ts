@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   HttpHandler,
-  HttpHeaders,
   HttpInterceptor,
-  HttpParams,
   HttpRequest,
 } from '@angular/common/http';
 import { AuthService } from './auth.service';
@@ -21,7 +19,6 @@ export class AuthInterceptorService implements HttpInterceptor {
         }
         const modifiedReq = req.clone({
           setHeaders: {
-            'Content-Type': 'application/json; charset=utf-8',
             Accept: 'application/json',
             Authorization: `Bearer ${user.token}`,
           },

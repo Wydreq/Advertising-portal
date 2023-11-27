@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Message } from 'primeng/api';
-import { OfferItem } from 'src/app/models/offers.model';
+import { OfferItem } from 'src/app/shared/models/offers.model';
 import { MessagesService } from 'src/app/services/messages.service';
 import { OffersService } from 'src/app/services/offers.service';
 
@@ -21,7 +21,6 @@ export interface OfferRes {
 })
 export class OfferDetailsComponent implements OnInit {
   offer!: OfferItem;
-  isLoading: boolean = true;
   messages: Message[] = [];
   isNumberShowed: boolean = false;
   seller: any;
@@ -40,7 +39,6 @@ export class OfferDetailsComponent implements OnInit {
       (resData) => {
         this.offer = resData.data;
         this.seller = resData.user;
-        this.isLoading = false;
       },
       (err) => {
         this.messagesService.setMessage(
@@ -48,7 +46,6 @@ export class OfferDetailsComponent implements OnInit {
           'Error',
           'Something went wrong!'
         );
-        this.isLoading = false;
       }
     );
     this.offersService.addOfferView(id);
@@ -56,7 +53,7 @@ export class OfferDetailsComponent implements OnInit {
 
   showOfferNumber() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.isNumberShowed = true;
     this.offersService.addPhoneNumberView(id);
+    this.isNumberShowed = true;
   }
 }

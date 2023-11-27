@@ -2,6 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Subscription } from 'rxjs';
 import { MenuItem, MessageService } from 'primeng/api';
+import { HttpClient } from '@angular/common/http';
+
+declare const Stripe: any;
 
 @Component({
   selector: 'app-header',
@@ -20,7 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private http: HttpClient
   ) {}
   ngOnInit() {
     this.userSub = this.authService.user.subscribe((user) => {
@@ -78,6 +82,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
             },
             {
               label: 'Settings',
+              routerLink: '/settings',
               icon: 'pi pi-fw pi-cog',
             },
           ],
@@ -115,6 +120,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.authService.logout();
+  }
+
+  addCredits() {
+    this.http
+      .post('http://localhost:5000/create-checkout-session', {
+        priceId: 'price_1OGPlVHfbIkTfMVjr31sEdaJ',
+      })
+      .subscribe((session: any) => {
+        this.redirectToCheckout(session.sessionId);
+      });
+  }
+
+  redirectToCheckout(sessionId: string) {
+    const stripe = Stripe(
+      'pk_test_51OGPG4HfbIkTfMVj8vFmEDF06RqIq29mPTPt3USO9PKMqYmoDIcWk39Uwnbt19qSFFUNpkOthRZ5mA4rcwoWGhOv006omcnJJw'
+    );
+
+    stripe.redirectToCheckout({
+      sessionId: sessionId,
+    });
   }
 
   ngOnDestroy() {

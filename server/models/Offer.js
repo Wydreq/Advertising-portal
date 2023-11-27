@@ -55,7 +55,7 @@ const OfferSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: 'no-photo.jpg',
+      required: true,
     },
     offerViews: {
       type: Number,

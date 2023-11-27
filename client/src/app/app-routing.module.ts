@@ -11,6 +11,7 @@ import { MyOffersComponent } from './my-offers/my-offers.component';
 import { NewOfferComponent } from './my-offers/new-offer/new-offer.component';
 import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.component';
 import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -44,6 +45,7 @@ const routes: Routes = [
       },
     ],
   },
+  { path: 'settings', canActivate: [AuthGuard], component: SettingsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },
 ];

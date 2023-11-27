@@ -20,7 +20,6 @@ export class RegisterModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() registerSuccess = new EventEmitter<void>();
   signupForm: FormGroup | any;
-  isLoading: boolean = false;
   genders: Gender[] | undefined;
   messages: Message[] = [];
 
@@ -82,9 +81,7 @@ export class RegisterModalComponent implements OnInit {
 
   onSubmit() {
     let authObs: Observable<{}>;
-    this.isLoading = true;
     if (!this.signupForm.valid) {
-      this.isLoading = false;
       return;
     }
 
@@ -99,13 +96,11 @@ export class RegisterModalComponent implements OnInit {
 
     authObs.subscribe(
       (resData) => {
-        this.isLoading = false;
         this.close.emit();
         this.registerSuccess.emit();
       },
       (error) => {
         this.messagesService.setMessage('error', 'Error', error);
-        this.isLoading = false;
       }
     );
   }

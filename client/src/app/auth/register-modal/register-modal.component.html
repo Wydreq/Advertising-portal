@@ -1,9 +1,6 @@
 <div class="backdrop" (click)="onClose()"></div>
 <div class="alert-box">
   <h2 style="margin-bottom: 30px">Create new account!</h2>
-  <div *ngIf="isLoading" style="text-align: center">
-    <app-loading-spinner></app-loading-spinner>
-  </div>
   <p-messages
     [(value)]="messages"
     [enableService]="false"
@@ -76,9 +73,9 @@
       </div>
     </div>
     <div class="alert-box-actions btn-cont" style="margin-top: 30px">
-      <p-button type="submit" class="mr-1" [disabled]="!signupForm.valid">{{
-        isLoading ? "Loading..." : "Register"
-      }}</p-button>
+      <p-button type="submit" class="mr-1" [disabled]="!signupForm.valid"
+        >Register</p-button
+      >
       <p-button type="button" (onClick)="onClose()">Close</p-button>
     </div>
   </form>

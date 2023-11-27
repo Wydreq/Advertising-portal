@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { OffersRes } from '../models/offers.model';
+import { OffersRes } from '../shared/models/offers.model';
 import { OfferRes } from '../my-offers/offer-details/offer-details.component';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
@@ -9,23 +9,18 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class OffersService {
   offers = new Subject<OffersRes>();
-  isLoading = new BehaviorSubject<boolean>(false);
   userOffers = new Subject<OffersRes>();
 
   constructor(private http: HttpClient) {}
 
   getAllOffers() {
-    this.isLoading.next(true);
     return this.http
       .get<OffersRes>('http://localhost:5000/api/v1/offers')
       .subscribe(
         (resData) => {
           this.offers.next(resData);
-          this.isLoading.next(false);
         },
-        (err) => {
-          this.isLoading.next(false);
-        }
+        (err) => {}
       );
   }
 
@@ -39,15 +34,11 @@ export class OffersService {
       url = `http://localhost:5000/api/v1/offers?category=${options.category.name}`;
     }
 
-    this.isLoading.next(true);
     return this.http.get<OffersRes>(url).subscribe(
       (resData) => {
         this.offers.next(resData);
-        this.isLoading.next(false);
       },
-      (err) => {
-        this.isLoading.next(false);
-      }
+      (err) => {}
     );
   }
 
@@ -64,17 +55,13 @@ export class OffersService {
   }
 
   getSpecificUserOffers() {
-    this.isLoading.next(true);
     return this.http
       .get<OffersRes>('http://localhost:5000/api/v1/offers/myOffers/all')
       .subscribe(
         (resData) => {
           this.userOffers.next(resData);
-          this.isLoading.next(false);
         },
-        (err) => {
-          this.isLoading.next(false);
-        }
+        (err) => {}
       );
   }
 
@@ -82,23 +69,20 @@ export class OffersService {
     return this.http.get<OfferRes>(`http://localhost:5000/api/v1/offers/${id}`);
   }
 
-  createNewOffer(offer: any, formData: any): Observable<any> {
-    // return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
-    // for (const entry of (formData as any).entries()) {
-    //   console.log(entry[0], entry[1]);
-    // Or display in the DOM, for example:
-    // document.getElementById('output').innerHTML += `${entry[0]}: ${entry[1]}<br>`;
-    // }
-    //return this.http.get('');
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'multipart/form-data',
-    //   Accept: 'application/json',
-    // });
+  uploadPhoto(image: any): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', image, image.name);
+
+    console.log('tutaj');
 
     return this.http.post(
       `http://localhost:5000/api/v1/offers/upload/photo`,
       formData
     );
+  }
+
+  createNewOffer(offer: any): Observable<any> {
+    return this.http.post(`http://localhost:5000/api/v1/offers`, offer);
   }
 
   deleteOffer(id: string) {

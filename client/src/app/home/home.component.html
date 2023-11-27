@@ -1,4 +1,3 @@
-<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 <div class="fullContainer">
   <p-messages
     [(value)]="messages"
@@ -7,13 +6,13 @@
   ></p-messages>
   <app-search-bar (onSearch)="customSearchHandler($event)"></app-search-bar>
   <div class="offersContainer">
-    <p class="not-found" *ngIf="!isLoading && !loadedOffers">No offers found</p>
+    <p class="not-found" *ngIf="!loadedOffers">No offers found</p>
     <div
       *ngFor="let offer of loadedOffers"
       class="cardContainer"
       [routerLink]="['/offers', offer.id]"
     >
-      <img src="../../assets/no-photo.jpg" alt="no-photo" class="imageCont" />
+      <img src="{{ offer.photo }}" alt="no-photo" class="imageCont" />
       <div class="infoContainer">
         <div class="fRow">
           <span class="offerName">{{ offer.name | titlecase }}</span>

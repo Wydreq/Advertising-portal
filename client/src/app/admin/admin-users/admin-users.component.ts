@@ -19,7 +19,6 @@ export class AdminUsersComponent implements OnInit {
   items: MenuItem[] | undefined;
   items2: MenuItem[] | undefined;
   selectedUser: any = null;
-  isLoading: boolean = true;
   messages: Message[] = [];
 
   constructor(
@@ -77,7 +76,6 @@ export class AdminUsersComponent implements OnInit {
   }
 
   chengeAccountStatus(user: any) {
-    this.isLoading = true;
     let adminObs: Observable<any>;
     if (user.status === 'active') {
       adminObs = this.adminService.updateUser('blocked', user._id);
@@ -91,7 +89,6 @@ export class AdminUsersComponent implements OnInit {
           this.fetchUsers();
         },
         (error) => {
-          this.isLoading = false;
           this.messagesService.setMessage(
             'error',
             'Error',
@@ -111,7 +108,6 @@ export class AdminUsersComponent implements OnInit {
           this.fetchUsers();
         },
         (error) => {
-          this.isLoading = false;
           this.messagesService.setMessage('error', 'Error', error);
         }
       );
@@ -119,7 +115,6 @@ export class AdminUsersComponent implements OnInit {
   }
 
   deleteUser(userId: string) {
-    this.isLoading = true;
     this.adminService.deleteUser(userId).subscribe(
       (resData) => {
         this.messagesService.setMessage(
@@ -141,12 +136,10 @@ export class AdminUsersComponent implements OnInit {
     adminObs.subscribe(
       (resData) => {
         this.users = resData;
-        this.isLoading = false;
         console.log(this.users);
       },
       (error) => {
         this.messagesService.setMessage('error', 'Error', error);
-        this.isLoading = false;
       }
     );
   }

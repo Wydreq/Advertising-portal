@@ -15,7 +15,6 @@ import { MessagesService } from '../services/messages.service';
 export class AuthComponent implements OnInit {
   isLogin: boolean = true;
   isReset: boolean = false;
-  isLoading: boolean = false;
   messages: Message[] = [];
 
   constructor(
@@ -31,14 +30,10 @@ export class AuthComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     let authObs: Observable<{}>;
-    this.isLoading = true;
     authObs = this.authService.login(form.value.email, form.value.password);
     authObs.subscribe(
-      (resData) => {
-        this.isLoading = false;
-      },
+      (resData) => {},
       (error) => {
-        this.isLoading = false;
         this.messagesService.setMessage('error', 'Error', error);
       }
     );
