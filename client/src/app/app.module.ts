@@ -49,6 +49,8 @@ import { ChangePasswordModalComponent } from './settings/change-password-modal/c
 import { LoadingInterceptor } from './shared/interceptors/loading.interceptor';
 import { ResetEmailComponent } from './settings/reset-email/reset-email.component';
 import { BuyModalComponent } from './my-offers/offer-details/buy-modal/buy-modal.component';
+import { NegotiateStartModalComponent } from './my-offers/offer-details/negotiate-start-modal/negotiate-start-modal.component';
+import { NegotiationsComponent } from './negotiations/negotiations.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { BuyModalComponent } from './my-offers/offer-details/buy-modal/buy-modal
     ChangePasswordModalComponent,
     ResetEmailComponent,
     BuyModalComponent,
+    NegotiateStartModalComponent,
+    NegotiationsComponent,
   ],
   imports: [
     BrowserModule,

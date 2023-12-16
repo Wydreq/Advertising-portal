@@ -69,6 +69,9 @@ const OfferSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    negotiateMinPrice: {
+      type: Number,
+    },
     status: {
       type: String,
       required: true,

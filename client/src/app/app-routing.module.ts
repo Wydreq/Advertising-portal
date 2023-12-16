@@ -13,6 +13,7 @@ import { OfferDetailsComponent } from './my-offers/offer-details/offer-details.c
 import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ResetEmailComponent } from './settings/reset-email/reset-email.component';
+import { NegotiationsComponent } from './negotiations/negotiations.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -48,6 +49,7 @@ const routes: Routes = [
   },
   { path: 'settings', canActivate: [AuthGuard], component: SettingsComponent },
   { path: 'reset-email/:token', component: ResetEmailComponent },
+  { path: 'negotiations', component: NegotiationsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },
 ];

@@ -62,6 +62,7 @@ export class NewOfferComponent implements OnInit {
         Validators.maxLength(5),
       ]),
       negotiate: new FormControl(false, Validators.required),
+      negotiateMinPrice: new FormControl(null),
       phone: new FormControl(null, [
         Validators.required,
         Validators.maxLength(20),
@@ -79,12 +80,23 @@ export class NewOfferComponent implements OnInit {
   }
 
   onSubmitForm() {
+    if (
+      this.newOfferForm.value.negotiateMinPrice >= this.newOfferForm.value.price
+    ) {
+      return this.messagesService.setMessage(
+        'error',
+        'Error',
+        'Negotiate price must be lower than original price!'
+      );
+    }
+
     const sendingForm = {
       name: this.newOfferForm.value.name,
       category: this.newOfferForm.value.category,
       description: this.newOfferForm.value.description,
       price: this.newOfferForm.value.price,
       negotiate: this.newOfferForm.value.negotiate,
+      negotiateMinPrice: this.newOfferForm.value.negotiateMinPrice,
       phone: this.newOfferForm.value.phone,
       address: this.newOfferForm.value.address,
       photo: this.newOfferForm.value.image,

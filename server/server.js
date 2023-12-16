@@ -16,6 +16,7 @@ const auth = require('./routes/auth');
 const offers = require('./routes/offers');
 const admin = require('./routes/admin');
 const address = require('./routes/address');
+const negotiation = require('./routes/negotiation');
 
 app.use(
   cors({
@@ -27,6 +28,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/offers', offers);
 app.use('/api/v1/admin', admin);
 app.use('/api/v1/address', address);
+app.use('/api/v1/negotiation', negotiation);
 
 app.use(errorHandler);
 

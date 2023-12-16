@@ -103,6 +103,16 @@ exports.uploadOfferPhoto = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.createOffer = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
+
+  if (req.body.price <= req.body.negotiateMinPrice) {
+    return next(
+      new ErrorResponse(
+        `Negotiate price must be lower than original price!`,
+        401
+      )
+    );
+  }
+
   const offer = await Offer.create(req.body);
 
   res.status(201).json({

@@ -24,7 +24,9 @@ export class OfferDetailsComponent implements OnInit {
   messages: Message[] = [];
   isNumberShowed: boolean = false;
   seller: any;
+
   isModalShowed = false;
+
   modalMode = 'buy';
 
   constructor(

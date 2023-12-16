@@ -48,6 +48,15 @@
       <span>Do you want to negotiate price?</span>
       <p-inputSwitch formControlName="negotiate"></p-inputSwitch>
     </div>
+    <div class="p-inputgroup" *ngIf="newOfferForm.value.negotiate === true">
+      <input
+        type="number"
+        pInputText
+        placeholder="Negotiate min price"
+        formControlName="negotiateMinPrice"
+      />
+      <span class="p-inputgroup-addon">$</span>
+    </div>
     <div class="p-inputgroup">
       <input
         type="number"

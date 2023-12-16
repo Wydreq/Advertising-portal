@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>Insert your max price</h2>
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
+  <form [formGroup]="negotiateStartForm" (ngSubmit)="onSubmit()">
+    <div class="p-inputgroup margin">
+      <input
+        type="number"
+        pInputText
+        placeholder="Max price"
+        formControlName="maxPrice"
+      />
+      <span class="p-inputgroup-addon">$</span>
+    </div>
+    <p-button
+      label="Submit"
+      type="submit"
+      class="submitBtn"
+      [disabled]="negotiateStartForm.invalid"
+    ></p-button>
+  </form>
+</div>

@@ -1,5 +1,12 @@
-<app-modal *ngIf="isModalShowed" (close)="closeModal()">
+<app-modal *ngIf="isModalShowed && modalMode === 'buy'" (close)="closeModal()">
   <app-buy-modal [offer]="offer"></app-buy-modal>
+</app-modal>
+
+<app-modal
+  *ngIf="isModalShowed && modalMode === 'negotiate'"
+  (close)="closeModal()"
+>
+  <app-negotiate-start-modal [offer]="offer"></app-negotiate-start-modal>
 </app-modal>
 
 <p-messages
@@ -35,7 +42,12 @@
         <button pButton class="p-button-help" (click)="openModal('buy')">
           Buy
         </button>
-        <button pButton class="p-button-outlined" *ngIf="offer.negotiate">
+        <button
+          pButton
+          class="p-button-outlined"
+          *ngIf="offer.negotiate"
+          (click)="openModal('negotiate')"
+        >
           Negotiate
         </button>
       </div>
