@@ -1,0 +1,16 @@
+<div class="fullContainer">
+  <h1 *ngIf="negotiations && negotiations.length === 0">
+    No negotiations found
+  </h1>
+  <div *ngFor="let negotiation of negotiations" class="negotiationCard">
+    <h2>Negotiate offer from {{ negotiation.offerBuyer.firstName }}</h2>
+    <h3 style="margin-left: auto">
+      Current price: {{ negotiation.bids[negotiation.bids.length - 1].price }}$
+    </h3>
+    <button
+      pButton
+      icon="pi pi-eye"
+      (click)="showNegotiation(negotiation._id)"
+    ></button>
+  </div>
+</div>

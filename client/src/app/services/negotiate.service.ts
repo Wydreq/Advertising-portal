@@ -13,4 +13,31 @@ export class NegotiateService {
       buyerMaxPrice,
     });
   }
+
+  getAllBuyerNegotiations() {
+    return this.http.get('http://localhost:5000/api/v1/negotiation/buyer');
+  }
+
+  getNegotiation(id: string | null) {
+    return this.http.get(`http://localhost:5000/api/v1/negotiation/${id}`);
+  }
+
+  getNegotiationBids(id: string | null) {
+    return this.http.get(`http://localhost:5000/api/v1/negotiation/${id}/bids`);
+  }
+
+  getOfferNegotiations(id: string | null) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/negotiation/offerNegotiations/${id}`
+    );
+  }
+
+  bidPrice(negotiationId: string | null, price: number) {
+    return this.http.post(
+      `http://localhost:5000/api/v1/negotiation/${negotiationId}/bid`,
+      {
+        price,
+      }
+    );
+  }
 }

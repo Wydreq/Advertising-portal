@@ -51,6 +51,8 @@ import { ResetEmailComponent } from './settings/reset-email/reset-email.componen
 import { BuyModalComponent } from './my-offers/offer-details/buy-modal/buy-modal.component';
 import { NegotiateStartModalComponent } from './my-offers/offer-details/negotiate-start-modal/negotiate-start-modal.component';
 import { NegotiationsComponent } from './negotiations/negotiations.component';
+import { NegotiationDetailsComponent } from './negotiations/negotiation-details/negotiation-details.component';
+import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer-negotiations.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { NegotiationsComponent } from './negotiations/negotiations.component';
     BuyModalComponent,
     NegotiateStartModalComponent,
     NegotiationsComponent,
+    NegotiationDetailsComponent,
+    OfferNegotiationsComponent,
   ],
   imports: [
     BrowserModule,

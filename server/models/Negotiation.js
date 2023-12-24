@@ -16,10 +16,25 @@ const NegotiationSchema = mongoose.Schema({
     ref: 'Offer',
     required: [true, 'Please provide the offer'],
   },
-  lastNegotiation: {
-    type: Number,
-    required: [true, 'Please provide the offer'],
+  status: {
+    type: String,
+    required: true,
+    default: 'active',
+    enum: ['active', 'finished'],
   },
+  bids: [
+    {
+      price: {
+        type: Number,
+        required: [true, 'Please provide the price'],
+      },
+      user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provice user'],
+      },
+    },
+  ],
 });
 
 const Negotiation = mongoose.model('Negotiation', NegotiationSchema);

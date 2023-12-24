@@ -37,6 +37,10 @@ export class MyOffersComponent implements OnInit {
     this.router.navigate(['/offers', id]);
   }
 
+  showOfferNegotiations(id: string) {
+    this.router.navigate([`/my-offers/${id}/negotiations`]);
+  }
+
   editOffer(id: string) {
     this.router.navigate(['my-offers/edit', id]);
   }

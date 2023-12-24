@@ -16,11 +16,14 @@ export class LoadingInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (request.url.includes('addPhoneNumberView')) {
+    if (
+      request.url.includes('addPhoneNumberView') ||
+      request.url.includes('/bids')
+    ) {
       return next.handle(request);
     }
     this.loadingService.isLoading$.next(true);
-
+    console.log(request.url);
     return next.handle(request).pipe(
       finalize(() => {
         this.loadingService.isLoading$.next(false);

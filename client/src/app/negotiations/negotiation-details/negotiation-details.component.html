@@ -1,0 +1,48 @@
+<div class="fullContainer">
+  <div class="bidWindow" *ngIf="negotiation">
+    <div class="top">
+      <img
+        src="{{ negotiation.offer.photo }}"
+        alt="offer image"
+        class="image"
+      />
+      <h3>{{ negotiation.offer.name | titlecase }}</h3>
+    </div>
+    <div class="mid">
+      <ng-container *ngFor="let bid of negotiation.bids">
+        <div *ngIf="bid.user === userId" class="buyerBidCard">
+          <small>You</small>
+          <div class="greenCard">
+            <span>{{ bid.price }}$</span>
+          </div>
+        </div>
+        <div class="sellerBidCard" *ngIf="bid.user !== userId">
+          <small>Seller</small>
+          <div class="grayCard">
+            <span>{{ bid.price }}$</span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="bot">
+      <form [formGroup]="form">
+        <input type="text" pInputText formControlName="price" />
+        <button
+          pButton
+          (click)="bidPrice()"
+          class="p-button-primary"
+          [disabled]="
+            negotiation.bids[negotiation.bids.length - 1].user === userId
+          "
+          type="submit"
+        >
+          Bid
+        </button>
+        <button pButton class="p-button-danger" style="margin-left: auto">
+          End negotiations
+        </button>
+      </form>
+      <small *ngIf="errorMessage" class="inputError">{{ errorMessage }}</small>
+    </div>
+  </div>
+</div>

@@ -18,6 +18,11 @@
           ></button>
           <button
             pButton
+            icon="pi pi-chart-line"
+            (click)="showOfferNegotiations(offer.id)"
+          ></button>
+          <button
+            pButton
             icon="pi pi-pencil"
             class="p-button-warning"
             (click)="editOffer(offer.id)"

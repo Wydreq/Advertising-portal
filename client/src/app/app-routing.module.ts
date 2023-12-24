@@ -14,6 +14,8 @@ import { EditOfferComponent } from './my-offers/edit-offer/edit-offer.component'
 import { SettingsComponent } from './settings/settings.component';
 import { ResetEmailComponent } from './settings/reset-email/reset-email.component';
 import { NegotiationsComponent } from './negotiations/negotiations.component';
+import { NegotiationDetailsComponent } from './negotiations/negotiation-details/negotiation-details.component';
+import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer-negotiations.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -30,6 +32,11 @@ const routes: Routes = [
     path: 'my-offers/new',
     canActivate: [AuthGuard],
     component: NewOfferComponent,
+  },
+  {
+    path: 'my-offers/:offerId/negotiations',
+    canActivate: [AuthGuard],
+    component: OfferNegotiationsComponent,
   },
   {
     path: 'my-offers/edit/:id',
@@ -50,6 +57,7 @@ const routes: Routes = [
   { path: 'settings', canActivate: [AuthGuard], component: SettingsComponent },
   { path: 'reset-email/:token', component: ResetEmailComponent },
   { path: 'negotiations', component: NegotiationsComponent },
+  { path: 'negotiations/:id', component: NegotiationDetailsComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },
 ];

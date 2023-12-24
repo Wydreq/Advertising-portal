@@ -1,1 +1,22 @@
-<p>negotiations works!</p>
+<div class="fullContainer">
+  <h1>Your negotiations</h1>
+  <h2 *ngIf="userNegotiations && userNegotiations.length === 0">
+    No negotiations found!
+  </h2>
+  <ng-container *ngFor="let negotiation of userNegotiations">
+    <div class="offerCard">
+      <img
+        src="{{ negotiation.offer.photo }}"
+        alt="offer image"
+        class="image"
+      />
+      <h3>{{ negotiation.offer.name }}</h3>
+      <button
+        pButton
+        icon="pi pi-eye"
+        style="margin-left: auto"
+        (click)="showNegotiation(negotiation._id)"
+      ></button>
+    </div>
+  </ng-container>
+</div>

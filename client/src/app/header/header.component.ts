@@ -81,6 +81,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
               ],
             },
             {
+              label: 'Negotiations',
+              icon: 'pi pi-fw pi-chart-line',
+              routerLink: '/negotiations',
+            },
+            {
               label: 'Settings',
               routerLink: '/settings',
               icon: 'pi pi-fw pi-cog',
