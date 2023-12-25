@@ -25,6 +25,11 @@ const PurchaseSchema = mongoose.Schema({
     type: Number,
     required: [true, 'Please provide the total price'],
   },
+  status: {
+    type: String,
+    default: 'new',
+    enum: ['new', 'delivery', 'delivered'],
+  },
   purchaseDate: {
     type: Date,
     default: Date.now,

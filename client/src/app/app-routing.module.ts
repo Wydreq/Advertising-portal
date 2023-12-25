@@ -16,6 +16,8 @@ import { ResetEmailComponent } from './settings/reset-email/reset-email.componen
 import { NegotiationsComponent } from './negotiations/negotiations.component';
 import { NegotiationDetailsComponent } from './negotiations/negotiation-details/negotiation-details.component';
 import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer-negotiations.component';
+import { PurchasedTransactionComponent } from './transactions/purchased-transaction/purchased-transaction.component';
+import { SoldTransactionComponent } from './transactions/sold-transaction/sold-transaction.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -42,6 +44,16 @@ const routes: Routes = [
     path: 'my-offers/edit/:id',
     canActivate: [AuthGuard],
     component: EditOfferComponent,
+  },
+  {
+    path: 'transactions/purchased',
+    canActivate: [AuthGuard],
+    component: PurchasedTransactionComponent,
+  },
+  {
+    path: 'transactions/sold',
+    canActivate: [AuthGuard],
+    component: SoldTransactionComponent,
   },
   {
     path: 'admin',

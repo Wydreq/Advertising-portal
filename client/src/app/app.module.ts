@@ -53,6 +53,11 @@ import { NegotiateStartModalComponent } from './my-offers/offer-details/negotiat
 import { NegotiationsComponent } from './negotiations/negotiations.component';
 import { NegotiationDetailsComponent } from './negotiations/negotiation-details/negotiation-details.component';
 import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer-negotiations.component';
+import { SoldTransactionComponent } from './transactions/sold-transaction/sold-transaction.component';
+import { PurchasedTransactionComponent } from './transactions/purchased-transaction/purchased-transaction.component';
+import { AccordionModule } from 'primeng/accordion';
+import { AvatarModule } from 'primeng/avatar';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
   declarations: [
@@ -85,6 +90,8 @@ import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer
     NegotiationsComponent,
     NegotiationDetailsComponent,
     OfferNegotiationsComponent,
+    SoldTransactionComponent,
+    PurchasedTransactionComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,6 +116,9 @@ import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer
     GoogleMapsModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    AccordionModule,
+    AvatarModule,
+    BadgeModule,
   ],
   providers: [
     {

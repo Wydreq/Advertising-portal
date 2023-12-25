@@ -1,0 +1,16 @@
+.accordion {
+  margin-top: 70px;
+  width: 70vw;
+}
+
+.headerCont {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  width: 80vw;
+}
+
+.badge {
+  margin-left: auto;
+}
