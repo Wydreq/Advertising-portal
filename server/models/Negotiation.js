@@ -16,6 +16,11 @@ const NegotiationSchema = mongoose.Schema({
     ref: 'Offer',
     required: [true, 'Please provide the offer'],
   },
+  deliveryAddress: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Address',
+    required: [true, 'Please provide the address'],
+  },
   status: {
     type: String,
     required: true,

@@ -2,6 +2,7 @@ const Negotiation = require('../models/Negotiation');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const Offer = require('../models/Offer');
+const Purchase = require('../models/Purchase');
 
 // @desc    Create negotiation
 // @route   POST /api/v1/negotiation
@@ -33,6 +34,7 @@ exports.createNegotiation = asyncHandler(async (req, res, next) => {
     offerOwner: offer.user,
     offerBuyer: req.body.user,
     offer: req.body.offerId,
+    deliveryAddress: req.body.deliveryAddress,
     bids: [
       {
         price: req.body.buyerMaxPrice,
@@ -98,7 +100,8 @@ exports.getNegotiation = asyncHandler(async (req, res, next) => {
 
   const negotiation = await Negotiation.findById(req.params.negotiationId)
     .populate('offerOwner')
-    .populate('offer');
+    .populate('offer')
+    .populate('offerBuyer');
 
   if (
     req.body.user !== negotiation.offerOwner._id.toString() &&
@@ -150,6 +153,10 @@ exports.bidNegotiation = asyncHandler(async (req, res, next) => {
     return res.status(404).json({ error: 'Negotiation not found' });
   }
 
+  if (negotiation.status === 'finished') {
+    return next(new ErrorResponse(`Negotiation has been finished`, 401));
+  }
+
   if (
     req.body.user !== negotiation.offerOwner._id.toString() &&
     req.body.user !== negotiation.offerBuyer._id.toString()
@@ -193,5 +200,85 @@ exports.bidNegotiation = asyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     data: negotiation,
+  });
+});
+
+// @desc    End negotiation
+// @route   POST /api/v1/negotiation/:negotiationId/end
+// @access  Private
+exports.endNegotiation = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  const negotiation = await Negotiation.findById(req.params.negotiationId);
+
+  if (
+    req.body.user !== negotiation.offerOwner._id.toString() &&
+    req.body.user !== negotiation.offerBuyer._id.toString()
+  ) {
+    return next(
+      new ErrorResponse(`No permission to end this negotiation`, 401)
+    );
+  }
+
+  if (negotiation.status === 'finished') {
+    return next(new ErrorResponse(`Negotiation is already finished!`, 401));
+  }
+
+  negotiation.status = 'finished';
+
+  await negotiation.save();
+
+  res.status(201).json({
+    success: true,
+    data: negotiation.status,
+  });
+});
+
+// @desc    Accept current negotiation prtice
+// @route   POST /api/v1/negotiation/:negotiationId/accept
+// @access  Private
+exports.acceptNegotiation = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  const negotiation = await Negotiation.findById(req.params.negotiationId);
+
+  if (
+    req.body.user !== negotiation.offerOwner._id.toString() &&
+    req.body.user !== negotiation.offerBuyer._id.toString()
+  ) {
+    return next(
+      new ErrorResponse(`No permission to accept this negotiation`, 401)
+    );
+  }
+
+  if (negotiation.status === 'finished') {
+    return next(new ErrorResponse(`Negotiation is already finished!`, 401));
+  }
+
+  const newPurchase = new Purchase({
+    buyer: negotiation.offerBuyer._id,
+    seller: negotiation.offerOwner._id,
+    offer: negotiation.offer,
+    deliveryAddress: negotiation.deliveryAddress,
+    totalPrice: negotiation.bids[negotiation.bids.length - 1].price,
+  });
+
+  await newPurchase.save();
+
+  await Negotiation.updateMany(
+    { offer: negotiation.offer },
+    { $set: { status: 'finished' } }
+  );
+
+  await Offer.findOneAndUpdate(
+    { _id: negotiation.offer },
+    {
+      status: 'finished',
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    data: negotiation.status,
   });
 });

@@ -15,11 +15,32 @@
       />
       <span class="p-inputgroup-addon">$</span>
     </div>
+    <h2>Pick delivery address</h2>
+    <div class="savedAddressesContainer">
+      <div class="addressAddItem">
+        <span>Add new address</span
+        ><i class="pi pi-plus" style="font-size: 1.5rem"></i>
+      </div>
+      <div
+        class="addressItem"
+        *ngFor="let address of userAddresses"
+        (click)="setDeliveryAddress(address)"
+        [ngClass]="{ selected: pickedDeliveryAddress === address }"
+      >
+        <span>{{ address.recieverFullName | titlecase }}</span>
+        <span>{{ address.street | titlecase }} {{ address.houseNumber }}</span>
+        <span>{{ address.postalCode }}</span>
+        <span
+          >{{ address.city | titlecase }},
+          {{ address.country | titlecase }}</span
+        >
+      </div>
+    </div>
     <p-button
       label="Submit"
       type="submit"
       class="submitBtn"
-      [disabled]="negotiateStartForm.invalid"
+      [disabled]="negotiateStartForm.invalid || !pickedDeliveryAddress"
     ></p-button>
   </form>
 </div>

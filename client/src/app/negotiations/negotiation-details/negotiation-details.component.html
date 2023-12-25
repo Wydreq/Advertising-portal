@@ -7,6 +7,19 @@
         class="image"
       />
       <h3>{{ negotiation.offer.name | titlecase }}</h3>
+      <span
+        style="margin-left: auto"
+        class="currentPrice"
+        *ngIf="negotiation.status === 'active'"
+        >Current price:
+        {{ negotiation.bids[negotiation.bids.length - 1].price }}$</span
+      >
+      <span
+        style="margin-left: auto"
+        class="currentPrice"
+        *ngIf="negotiation.status === 'finished'"
+        >Negotiation finished
+      </span>
     </div>
     <div class="mid">
       <ng-container *ngFor="let bid of negotiation.bids">
@@ -17,7 +30,12 @@
           </div>
         </div>
         <div class="sellerBidCard" *ngIf="bid.user !== userId">
-          <small>Seller</small>
+          <small *ngIf="userId === negotiation.offerBuyer._id">{{
+            negotiation.offerOwner.firstName
+          }}</small>
+          <small *ngIf="userId === negotiation.offerOwner._id">{{
+            negotiation.offerBuyer.firstName
+          }}</small>
           <div class="grayCard">
             <span>{{ bid.price }}$</span>
           </div>
@@ -25,7 +43,13 @@
       </ng-container>
     </div>
     <div class="bot">
-      <form [formGroup]="form">
+      <h2
+        *ngIf="negotiation.status === 'finished'"
+        style="margin-left: auto; margin-right: auto"
+      >
+        Negotiation finished
+      </h2>
+      <form [formGroup]="form" *ngIf="negotiation.status === 'active'">
         <input type="text" pInputText formControlName="price" />
         <button
           pButton
@@ -38,7 +62,23 @@
         >
           Bid
         </button>
-        <button pButton class="p-button-danger" style="margin-left: auto">
+        <button
+          pButton
+          class="p-button-success"
+          (click)="acceptNegotiation()"
+          [disabled]="
+            negotiation.bids[negotiation.bids.length - 1].user === userId
+          "
+          type="button"
+        >
+          Accept current price
+        </button>
+        <button
+          pButton
+          class="p-button-danger"
+          style="margin-left: auto"
+          (click)="endNegotiation()"
+        >
           End negotiations
         </button>
       </form>

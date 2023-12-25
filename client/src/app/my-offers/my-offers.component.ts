@@ -14,6 +14,8 @@ export class MyOffersComponent implements OnInit {
   userOffers!: OfferItem[];
   offersLength: number = 0;
   messages: Message[] = [];
+  hasFinishedOffers: boolean = false;
+  hasActiveOffers: boolean = false;
 
   constructor(
     private offersService: OffersService,
@@ -29,6 +31,12 @@ export class MyOffersComponent implements OnInit {
       console.log(userOffers);
       this.userOffers = userOffers.data;
       this.offersLength = userOffers.data.length;
+      this.hasFinishedOffers = this.userOffers.some(
+        (offer) => offer.status === 'finished'
+      );
+      this.hasActiveOffers = this.userOffers.some(
+        (offer) => offer.status === 'new'
+      );
     });
     this.offersService.getSpecificUserOffers();
   }

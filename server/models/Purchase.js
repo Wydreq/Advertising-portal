@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 
 const PurchaseSchema = mongoose.Schema({
-  user: {
+  buyer: {
     type: mongoose.Schema.ObjectId,
     ref: 'User',
-    required: [true, 'Please provide the user'],
+    required: [true, 'Please provide the buyer'],
+  },
+  seller: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: [true, 'Please provide the seller'],
   },
   offer: {
     type: mongoose.Schema.ObjectId,

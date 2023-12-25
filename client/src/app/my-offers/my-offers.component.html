@@ -5,6 +5,7 @@
 ></p-messages>
 <div class="fullCont">
   <h1>My active offers</h1>
+  <p *ngIf="!hasActiveOffers">No active offers found</p>
   <ng-container *ngFor="let offer of userOffers">
     <div class="offerCard" *ngIf="offer.status === 'new'">
       <img src="{{ offer.photo }}" alt="offer image" class="image" />
@@ -42,8 +43,9 @@
     </div>
   </ng-container>
   <h1>Finished offers</h1>
+  <p *ngIf="!hasFinishedOffers">No finished offers found</p>
   <ng-container *ngFor="let offer of userOffers">
-    <div class="offerCard" *ngIf="offer.status === 'purchased'">
+    <div class="offerCard" *ngIf="offer.status === 'finished'">
       <img src="{{ offer.photo }}" alt="offer image" class="image" />
       <h3>{{ offer.name }}</h3>
       <div class="endContainer">

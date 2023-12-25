@@ -53,6 +53,7 @@ export class NegotiationDetailsComponent implements OnInit, OnDestroy {
     const id = this.route.snapshot.paramMap.get('id');
     this.negotiateService.getNegotiation(id).subscribe((negotiation: any) => {
       this.negotiation = negotiation.data;
+      console.log(negotiation.data);
     });
   }
 
@@ -68,6 +69,34 @@ export class NegotiationDetailsComponent implements OnInit, OnDestroy {
         this.errorMessage = error.error.error;
       }
     );
+  }
+
+  endNegotiation() {
+    if (window.confirm('Do you want to end negotiations?')) {
+      const id = this.route.snapshot.paramMap.get('id');
+      this.negotiateService.endNegotiation(id).subscribe(
+        () => {
+          this.loadNegotiationData();
+        },
+        (error) => {
+          this.errorMessage = error.error.error;
+        }
+      );
+    }
+  }
+
+  acceptNegotiation() {
+    if (window.confirm('Do you want to accept current price?')) {
+      const id = this.route.snapshot.paramMap.get('id');
+      this.negotiateService.acceptNegotiation(id).subscribe(
+        () => {
+          this.loadNegotiationData();
+        },
+        (error) => {
+          this.errorMessage = error.error.error;
+        }
+      );
+    }
   }
 
   ngOnDestroy(): void {

@@ -7,9 +7,14 @@ import { HttpClient } from '@angular/common/http';
 export class NegotiateService {
   constructor(private http: HttpClient) {}
 
-  startNegotiate(offerId: string, buyerMaxPrice: number) {
+  startNegotiate(
+    offerId: string,
+    buyerMaxPrice: number,
+    deliveryAddress: string
+  ) {
     return this.http.post('http://localhost:5000/api/v1/negotiation', {
       offerId,
+      deliveryAddress,
       buyerMaxPrice,
     });
   }
@@ -38,6 +43,18 @@ export class NegotiateService {
       {
         price,
       }
+    );
+  }
+
+  endNegotiation(negotiationId: string | null) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/negotiation/${negotiationId}/end`
+    );
+  }
+
+  acceptNegotiation(negotiationId: string | null) {
+    return this.http.get(
+      `http://localhost:5000/api/v1/negotiation/${negotiationId}/accept`
     );
   }
 }

@@ -6,7 +6,9 @@
   ></p-messages>
   <app-search-bar (onSearch)="customSearchHandler($event)"></app-search-bar>
   <div class="offersContainer">
-    <p class="not-found" *ngIf="!loadedOffers">No offers found</p>
+    <p class="not-found" *ngIf="loadedOffers && loadedOffers.length === 0">
+      No offers found
+    </p>
     <div
       *ngFor="let offer of loadedOffers"
       class="cardContainer"

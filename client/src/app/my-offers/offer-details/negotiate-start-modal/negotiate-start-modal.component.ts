@@ -1,9 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Message } from 'primeng/api';
 import { MessagesService } from 'src/app/services/messages.service';
 import { NegotiateService } from 'src/app/services/negotiate.service';
+import { SettingsService } from 'src/app/services/settings.service';
 import { OfferItem } from 'src/app/shared/models/offers.model';
+import { IAddress } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-negotiate-start-modal',
@@ -13,16 +16,24 @@ import { OfferItem } from 'src/app/shared/models/offers.model';
 export class NegotiateStartModalComponent {
   negotiateStartForm!: FormGroup;
   messages: Message[] = [];
+  userAddresses!: IAddress[];
+  pickedDeliveryAddress!: IAddress;
 
   constructor(
     private formBuilder: FormBuilder,
     private negotiateService: NegotiateService,
-    private messagesService: MessagesService
+    private messagesService: MessagesService,
+    private settingsService: SettingsService,
+    private router: Router
   ) {}
 
   @Input() offer!: OfferItem;
 
   ngOnInit(): void {
+    this.settingsService.getUserAddresses();
+    this.settingsService.userAddresses.subscribe((addresses) => {
+      this.userAddresses = addresses;
+    });
     this.messagesService.messages$.subscribe((messages) => {
       this.messages = messages;
     });
@@ -31,16 +42,25 @@ export class NegotiateStartModalComponent {
     });
   }
 
+  setDeliveryAddress(address: IAddress) {
+    this.pickedDeliveryAddress = address;
+  }
+
   onSubmit() {
     this.negotiateService
-      .startNegotiate(this.offer._id, this.negotiateStartForm.value.maxPrice)
+      .startNegotiate(
+        this.offer._id,
+        this.negotiateStartForm.value.maxPrice,
+        this.pickedDeliveryAddress._id
+      )
       .subscribe(
-        (res) => {
+        (res: any) => {
           this.messagesService.setMessage(
             'success',
             'Success',
             'Negotitation created'
           );
+          this.router.navigate(['/negotiations', res.data._id]);
         },
         (err) => {
           this.messagesService.setMessage('error', 'Error', err.error.error);
