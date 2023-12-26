@@ -89,6 +89,12 @@ button {
   gap: 10px;
 }
 
+.finished {
+  margin: auto;
+  font-size: 20px;
+  font-weight: bold;
+}
+
 .descriptionContainer {
   width: 100%;
   background-color: white;

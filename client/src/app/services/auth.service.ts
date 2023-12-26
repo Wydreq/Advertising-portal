@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { BehaviorSubject, catchError, Subject, tap, throwError } from 'rxjs';
 import { IAddress, User } from '../shared/models/user.model';
@@ -27,6 +27,7 @@ export class AuthService {
   private tokenExpirationTimer: any;
   initialUser: User | null = null;
   user = new BehaviorSubject<User | null>(this.initialUser);
+  credits = new BehaviorSubject<Number>(0);
 
   constructor(private http: HttpClient, private router: Router) {}
 

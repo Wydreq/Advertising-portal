@@ -23,7 +23,6 @@ export class LoadingInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
     this.loadingService.isLoading$.next(true);
-    console.log(request.url);
     return next.handle(request).pipe(
       finalize(() => {
         this.loadingService.isLoading$.next(false);

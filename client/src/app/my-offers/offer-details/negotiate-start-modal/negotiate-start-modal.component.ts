@@ -46,6 +46,10 @@ export class NegotiateStartModalComponent {
     this.pickedDeliveryAddress = address;
   }
 
+  redirectToSettings() {
+    this.router.navigate(['/settings']);
+  }
+
   onSubmit() {
     this.negotiateService
       .startNegotiate(

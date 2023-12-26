@@ -1,0 +1,13 @@
+.fullCont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 60vh;
+  gap: 20px;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+}

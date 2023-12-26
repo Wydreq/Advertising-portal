@@ -8,6 +8,7 @@ const {
   getPurchasedItems,
   setItemOnDelivery,
   setItemDelivered,
+  purchaseItem,
 } = require('../controllers/purchase');
 
 router.route('/sold').get(advancedResults(Purchase), protect, getSoldItems);
@@ -17,5 +18,6 @@ router
 
 router.route('/:purchaseId/delivery').get(protect, setItemOnDelivery);
 router.route('/:purchaseId/delivered').get(protect, setItemDelivered);
+router.route('/:offerId/buy').post(protect, purchaseItem);
 
 module.exports = router;

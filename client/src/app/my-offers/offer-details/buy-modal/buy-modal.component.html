@@ -1,5 +1,10 @@
 <div class="container">
   <h1>Purchase summary</h1>
+  <p-messages
+    [(value)]="messages"
+    [enableService]="false"
+    [closable]="true"
+  ></p-messages>
   <div class="summaryContainer">
     <img src="{{ offer.photo }}" alt="offer photo" class="offerPhoto" />
     <h2>{{ offer.name }}</h2>
@@ -7,7 +12,7 @@
   </div>
   <h2>Pick delivery address</h2>
   <div class="savedAddressesContainer">
-    <div class="addressAddItem">
+    <div class="addressAddItem" (click)="redirectToSettings()">
       <span>Add new address</span
       ><i class="pi pi-plus" style="font-size: 1.5rem"></i>
     </div>
@@ -25,5 +30,10 @@
       >
     </div>
   </div>
-  <p-button type="submit" [disabled]="!pickedDeliveryAddress">Submit</p-button>
+  <p-button
+    type="submit"
+    [disabled]="!pickedDeliveryAddress"
+    (click)="purchaseItem()"
+    >Submit</p-button
+  >
 </div>

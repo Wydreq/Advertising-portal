@@ -1,10 +1,25 @@
 <div class="fullContainer">
   <h1>Your negotiations</h1>
-  <h2 *ngIf="userNegotiations && userNegotiations.length === 0">
-    No negotiations found!
-  </h2>
+  <h3>Active negotiations</h3>
   <ng-container *ngFor="let negotiation of userNegotiations">
-    <div class="offerCard">
+    <div class="offerCard" *ngIf="negotiation.status === 'active'">
+      <img
+        src="{{ negotiation.offer.photo }}"
+        alt="offer image"
+        class="image"
+      />
+      <h3>{{ negotiation.offer.name }}</h3>
+      <button
+        pButton
+        icon="pi pi-eye"
+        style="margin-left: auto"
+        (click)="showNegotiation(negotiation._id)"
+      ></button>
+    </div>
+  </ng-container>
+  <h3>History</h3>
+  <ng-container *ngFor="let negotiation of userNegotiations">
+    <div class="offerCard" *ngIf="negotiation.status === 'finished'">
       <img
         src="{{ negotiation.offer.photo }}"
         alt="offer image"

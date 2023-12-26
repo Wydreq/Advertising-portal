@@ -34,11 +34,14 @@
     <div class="titleContact">
       <span class="added">Created: {{ offer.createdAt | date }}</span>
       <span class="title">{{ offer.name | titlecase }}</span>
-      <div class="priceCont">
+      <span class="finished" *ngIf="offer.status !== 'new'"
+        >Offer finished</span
+      >
+      <div class="priceCont" *ngIf="offer.status === 'new'">
         <span class="price">{{ offer.price }}$</span>
         <span class="negotiate" *ngIf="offer.negotiate">Negotiable</span>
       </div>
-      <div class="btnContainer">
+      <div class="btnContainer" *ngIf="offer.status === 'new'">
         <button pButton class="p-button-help" (click)="openModal('buy')">
           Buy
         </button>
@@ -58,7 +61,7 @@
       <span class="added">On portal since {{ seller.createdAt | date }}</span>
       <button
         pButton
-        *ngIf="!isNumberShowed"
+        *ngIf="!isNumberShowed && offer.status === 'new'"
         class="p-button-help"
         (click)="showOfferNumber()"
       >

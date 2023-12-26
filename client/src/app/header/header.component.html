@@ -8,5 +8,10 @@
       routerLink="/home"
     />
   </ng-template>
-  <ng-template pTemplate="end"> </ng-template>
+  <ng-template pTemplate="end">
+    <div class="walletCont" (click)="paymentHandler()" *ngIf="isAuthenticated">
+      <span>Balance: {{ credits }}$</span>
+      <i class="pi pi-wallet"></i>
+    </div>
+  </ng-template>
 </p-menubar>

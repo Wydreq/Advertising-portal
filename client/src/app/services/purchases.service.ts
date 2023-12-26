@@ -26,4 +26,10 @@ export class PurchasesService {
       `http://localhost:5000/api/v1/purchases/${id}/delivered`
     );
   }
+
+  purchaseItem(id: string, addressId: string) {
+    return this.http.post(`http://localhost:5000/api/v1/purchases/${id}/buy`, {
+      deliveryAddress: addressId,
+    });
+  }
 }

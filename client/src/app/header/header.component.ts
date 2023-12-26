@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { MenuItem, MessageService } from 'primeng/api';
 import { HttpClient } from '@angular/common/http';
+import { PaymentService } from '../services/payment.service';
+import { CreditsService } from '../services/credits.service';
 
 declare const Stripe: any;
 
@@ -17,6 +19,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   firstName: string | undefined = '';
   lastName: string | undefined = '';
   role: string | undefined = '';
+  credits = 0;
   private userSub: Subscription | undefined;
   items: MenuItem[] | undefined;
   menuChanged: boolean = true;
@@ -24,10 +27,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private messageService: MessageService,
-    private http: HttpClient
+    private paymentService: PaymentService,
+    private creditsService: CreditsService
   ) {}
+
   ngOnInit() {
     this.userSub = this.authService.user.subscribe((user) => {
+      console.log(user);
       this.menuChanged = false;
       this.isAuthenticated = !!user;
       this.firstName = user?.firstName;
@@ -131,10 +137,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
           : 'Successfully logged out!',
       });
     });
+    this.creditsService.refreshCredits();
+    this.creditsService.credits.subscribe((credits: any) => {
+      this.credits = credits;
+    });
   }
 
   onLogout() {
     this.authService.logout();
+  }
+
+  paymentHandler() {
+    this.paymentService.startPayment();
   }
 
   ngOnDestroy() {

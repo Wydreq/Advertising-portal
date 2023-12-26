@@ -3,6 +3,7 @@ const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
 const Offer = require('../models/Offer');
 const Purchase = require('../models/Purchase');
+const User = require('../models/User');
 
 // @desc    Create negotiation
 // @route   POST /api/v1/negotiation
@@ -11,6 +12,7 @@ exports.createNegotiation = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
 
   const offer = await Offer.findById(req.body.offerId);
+  const user = await User.findById(req.body.user);
 
   if (!offer) {
     return next(new ErrorResponse(`Offer not found`, 404));
@@ -18,6 +20,10 @@ exports.createNegotiation = asyncHandler(async (req, res, next) => {
 
   if (offer.negotiate === false) {
     return next(new ErrorResponse(`Offer is not negotiable`, 401));
+  }
+
+  if (user.credits < req.body.buyerMaxPrice) {
+    return next(new ErrorResponse(`No enough money in your wallet`, 401));
   }
 
   if (req.body.buyerMaxPrice <= offer.negotiateMinPrice) {
@@ -35,6 +41,7 @@ exports.createNegotiation = asyncHandler(async (req, res, next) => {
     offerBuyer: req.body.user,
     offer: req.body.offerId,
     deliveryAddress: req.body.deliveryAddress,
+    buyerMaxPrice: req.body.buyerMaxPrice,
     bids: [
       {
         price: req.body.buyerMaxPrice,
@@ -43,6 +50,8 @@ exports.createNegotiation = asyncHandler(async (req, res, next) => {
     ],
   };
 
+  user.credits = user.credits - req.body.buyerMaxPrice;
+  await user.save();
   const negotiation = await Negotiation.create(preparedData);
 
   res.status(201).json({
@@ -149,6 +158,8 @@ exports.bidNegotiation = asyncHandler(async (req, res, next) => {
     req.params.negotiationId
   ).populate('offer');
 
+  const user = await User.findById(req.body.user);
+
   if (!negotiation) {
     return res.status(404).json({ error: 'Negotiation not found' });
   }
@@ -171,6 +182,18 @@ exports.bidNegotiation = asyncHandler(async (req, res, next) => {
     negotiation.bids[negotiation.bids.length - 1].user.toString()
   ) {
     return next(new ErrorResponse(`Your offer is already sent`, 401));
+  }
+
+  if (
+    req.body.price > user.credits + negotiation.buyerMaxPrice &&
+    req.body.user === negotiation.offerBuyer._id.toString()
+  ) {
+    return next(
+      new ErrorResponse(
+        `No enough money... you have ${user.credits} + ${negotiation.buyerMaxPrice} in deposit.`,
+        401
+      )
+    );
   }
 
   if (req.body.user === negotiation.offerOwner._id.toString()) {
@@ -210,6 +233,9 @@ exports.endNegotiation = asyncHandler(async (req, res, next) => {
   req.body.user = req.user.id;
 
   const negotiation = await Negotiation.findById(req.params.negotiationId);
+  const buyer = await User.findById(negotiation.offerBuyer._id);
+
+  console.log(buyer);
 
   if (
     req.body.user !== negotiation.offerOwner._id.toString() &&
@@ -225,8 +251,10 @@ exports.endNegotiation = asyncHandler(async (req, res, next) => {
   }
 
   negotiation.status = 'finished';
+  buyer.credits = buyer.credits + negotiation.buyerMaxPrice;
 
   await negotiation.save();
+  await buyer.save();
 
   res.status(201).json({
     success: true,

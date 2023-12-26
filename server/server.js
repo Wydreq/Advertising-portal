@@ -5,13 +5,13 @@ const colors = require('colors');
 const connectDB = require('./config/db');
 const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
-
 dotenv.config({ path: './config/config.env' });
 
 connectDB();
 
 const app = express();
 app.use(express.json());
+app.use(express.static('public'));
 
 const auth = require('./routes/auth');
 const offers = require('./routes/offers');
@@ -19,10 +19,11 @@ const admin = require('./routes/admin');
 const address = require('./routes/address');
 const negotiation = require('./routes/negotiation');
 const purchases = require('./routes/purchase');
+const payment = require('./routes/payment');
 
 app.use(
   cors({
-    origin: 'http://localhost:4200',
+    origin: '*',
   })
 );
 
@@ -32,6 +33,7 @@ app.use('/api/v1/admin', admin);
 app.use('/api/v1/address', address);
 app.use('/api/v1/negotiation', negotiation);
 app.use('/api/v1/purchases', purchases);
+app.use('/api/v1/payment', payment);
 
 app.use(errorHandler);
 

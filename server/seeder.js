@@ -10,6 +10,7 @@ const Offer = require('./models/Offer');
 const Address = require('./models/Address');
 const Negotiation = require('./models/Negotiation');
 const Purchase = require('./models/Purchase');
+const Payment = require('./models/Payment');
 
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -44,6 +45,7 @@ const deleteData = async () => {
     await Address.deleteMany();
     await Offer.deleteMany();
     await User.deleteMany();
+    await Payment.deleteMany();
     console.log('Data Destroyed...'.red.inverse);
     process.exit();
   } catch (err) {

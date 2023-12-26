@@ -27,6 +27,10 @@ const NegotiationSchema = mongoose.Schema({
     default: 'active',
     enum: ['active', 'finished'],
   },
+  buyerMaxPrice: {
+    type: Number,
+    required: true,
+  },
   bids: [
     {
       price: {

@@ -58,6 +58,8 @@ import { PurchasedTransactionComponent } from './transactions/purchased-transact
 import { AccordionModule } from 'primeng/accordion';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
+import { SuccessfullPageComponent } from './payments/successfull-page/successfull-page.component';
+import { CancelPageComponent } from './payments/cancel-page/cancel-page.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +94,8 @@ import { BadgeModule } from 'primeng/badge';
     OfferNegotiationsComponent,
     SoldTransactionComponent,
     PurchasedTransactionComponent,
+    SuccessfullPageComponent,
+    CancelPageComponent,
   ],
   imports: [
     BrowserModule,

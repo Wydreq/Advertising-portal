@@ -18,6 +18,8 @@ import { NegotiationDetailsComponent } from './negotiations/negotiation-details/
 import { OfferNegotiationsComponent } from './my-offers/offer-negotiations/offer-negotiations.component';
 import { PurchasedTransactionComponent } from './transactions/purchased-transaction/purchased-transaction.component';
 import { SoldTransactionComponent } from './transactions/sold-transaction/sold-transaction.component';
+import { SuccessfullPageComponent } from './payments/successfull-page/successfull-page.component';
+import { CancelPageComponent } from './payments/cancel-page/cancel-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -68,8 +70,26 @@ const routes: Routes = [
   },
   { path: 'settings', canActivate: [AuthGuard], component: SettingsComponent },
   { path: 'reset-email/:token', component: ResetEmailComponent },
-  { path: 'negotiations', component: NegotiationsComponent },
-  { path: 'negotiations/:id', component: NegotiationDetailsComponent },
+  {
+    path: 'negotiations',
+    canActivate: [AuthGuard],
+    component: NegotiationsComponent,
+  },
+  {
+    path: 'negotiations/:id',
+    canActivate: [AuthGuard],
+    component: NegotiationDetailsComponent,
+  },
+  {
+    path: 'payment/successfull/:sessionId',
+    canActivate: [AuthGuard],
+    component: SuccessfullPageComponent,
+  },
+  {
+    path: 'payment/canceled',
+    canActivate: [AuthGuard],
+    component: CancelPageComponent,
+  },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },
 ];
