@@ -25,7 +25,6 @@ const offers = JSON.parse(
   fs.readFileSync(`${__dirname}/_data/offers.json`, 'utf-8')
 );
 
-// Import into DB
 const importData = async () => {
   try {
     await User.create(users);
@@ -37,7 +36,6 @@ const importData = async () => {
   }
 };
 
-// Delete data
 const deleteData = async () => {
   try {
     await Purchase.deleteMany();

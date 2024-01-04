@@ -51,6 +51,18 @@ exports.purchaseItem = asyncHandler(async (req, res, next) => {
 
   user.credits = user.credits - offer.price;
 
+  const allOfferNegotiations = await Negotiation.find({
+    offer: offer._id,
+  });
+
+  for (const negotiationIt of allOfferNegotiations) {
+    const buyer = await User.findById(negotiationIt.offerBuyer);
+    if (buyer._id !== negotiationIt.offerBuyer) {
+      buyer.credits += negotiationIt.bids[0].price;
+      await buyer.save();
+    }
+  }
+
   await newPurchase.save();
   await offer.save();
   await user.save();

@@ -13,8 +13,8 @@ export class AdminUsersComponent implements OnInit {
   users: {
     success: boolean;
     count: number;
-    data: any[]; // Use a more specific type if possible
-  } = { success: false, count: 0, data: [] }; // Initialize with default values
+    data: any[];
+  } = { success: false, count: 0, data: [] };
 
   items: MenuItem[] | undefined;
   items2: MenuItem[] | undefined;

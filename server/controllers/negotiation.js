@@ -305,6 +305,18 @@ exports.acceptNegotiation = asyncHandler(async (req, res, next) => {
     }
   );
 
+  //Giving back all negotiation credits for finished offer
+
+  const allOfferNegotiations = await Negotiation.find({
+    offer: negotiation.offer,
+  });
+
+  for (const negotiationIt of allOfferNegotiations) {
+    const buyer = await User.findById(negotiationIt.offerBuyer);
+    buyer.credits += negotiationIt.bids[0].price;
+    await buyer.save();
+  }
+
   res.status(201).json({
     success: true,
     data: negotiation.status,
