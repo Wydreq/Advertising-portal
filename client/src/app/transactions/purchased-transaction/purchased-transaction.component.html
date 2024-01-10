@@ -35,12 +35,14 @@
         {{ item.deliveryAddress.postalCode }} {{ item.deliveryAddress.city }},
         {{ item.deliveryAddress.country }}
       </p>
-      <p-button
+      <button
         *ngIf="item.status === 'delivery'"
-        label="Confirm the item has been shipped"
+        label="Confirm the item has been delivered"
         type="button"
+        pButton
+        class="p-button-success"
         (click)="setItemDelivered(item._id)"
-      ></p-button>
+      ></button>
     </p-accordionTab>
   </ng-container>
 </p-accordion>

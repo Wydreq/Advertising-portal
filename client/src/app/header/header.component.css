@@ -8,6 +8,11 @@
   background-color: white;
 }
 
+.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
 ::ng-deep p-menubarsub {
   width: 100%;
   display: flex;
